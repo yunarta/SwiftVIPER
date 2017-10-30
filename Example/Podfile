@@ -1,0 +1,6 @@
+use_frameworks!
+target 'SwiftVIPER_Tests' do
+  pod 'SwiftVIPER', :path => '../'
+  
+  
+end
