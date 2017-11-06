@@ -9,12 +9,6 @@
     import UIKit
 #endif
 
-#if os(macOS)
-    typealias ViewController = NSViewController
-#else
-    typealias ViewController = UIViewController
-#endif
-
 public class Intent: NSObject {
 
     public var action: String?
@@ -35,7 +29,7 @@ public class Intent: NSObject {
     }
 }
 
-extension ViewController {
+extension PlatformViewController {
 
     private static var keyForIntent = "keyVIPERRoutingInfo"
 
@@ -59,7 +53,7 @@ public protocol VIPERRouter: class {
     func performRouting(_ intent: Intent)
 }
 
-extension ViewController: VIPERRouter {
+extension PlatformViewController: VIPERRouter {
 
     public var router: VIPERRouter {
         return self
@@ -85,7 +79,7 @@ extension ViewController: VIPERRouter {
     func willPerformRouting(_ controller: UIViewController, intent: Intent) -> Bool
 }
 
-extension ViewController {
+extension PlatformViewController {
 
     private static var keyForRouting = "keyForRouting"
 

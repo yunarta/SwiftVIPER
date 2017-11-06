@@ -12,76 +12,6 @@ public class VIPERViewContext {
     }
 }
 
-public class VIPERField<T> {
-
-    var observer: [(T) -> Void]? = [(T) -> Void]()
-
-    public var value: T {
-        didSet {
-            observer?.forEach { closure in
-                closure(value)
-            }
-        }
-    }
-
-    public init(_ value: T) {
-        self.value = value
-    }
-
-    public func onChange(_ closure: @escaping (T) -> Void) {
-        observer?.append(closure)
-        closure(value)
-    }
-
-    deinit {
-        observer = nil
-    }
-}
-
-public class VIPEROptionalField<T> {
-
-    var observer: [(T) -> Void]? = [(T) -> Void]()
-
-    var nilObserver: [() -> Void]? = [() -> Void]()
-
-    public var value: T? {
-        didSet {
-            if let value = value {
-                observer?.forEach { closure in
-                    closure(value)
-                }
-            } else {
-                nilObserver?.forEach { closure in
-                    closure()
-                }
-            }
-
-        }
-    }
-
-    public init(_ value: T?) {
-        self.value = value
-    }
-
-    public func onChange(next: @escaping (T) -> Void, nullified: (() -> Void)? = nil) {
-        observer?.append(next)
-        if let nullified = nullified {
-            nilObserver?.append(nullified)
-        }
-
-        if let value = value {
-            next(value)
-        } else {
-            nullified?()
-        }
-    }
-
-    deinit {
-        observer = nil
-        nilObserver = nil
-    }
-}
-
 /** Class that where all the view interface of VIPER View will need to conform to.
  */
 public protocol VIPERViewInterface: class {
@@ -104,26 +34,62 @@ extension VIPERViewInterface {
     }
 }
 
+public typealias VIPERViewBindingOutlet = VIPERViewBinding & VIPERViewBindingInterface
+
+@objc public protocol VIPERViewBindingInterface: class {
+
+    init()
+}
+
 open class VIPERViewBinding: NSObject {
 
-    @IBOutlet public private (set) weak var controller: PlatformViewController?
+    public internal (set) weak var controller: PlatformViewController? {
+        didSet {
+            self.viewContext = VIPERViewContext(controller: controller)
+        }
+    }
 
-    private(set) var viewContext: VIPERViewContext?
+    public internal (set) var viewContext: VIPERViewContext?
 
-    private weak var view: VIPERViewInterface?
+    weak var internalView: VIPERViewInterface?
 
     public init(view: VIPERViewInterface) {
         super.init()
-        self.view = view
+        self.internalView = view
     }
 
     override open func awakeFromNib() {
         super.awakeFromNib()
+        assert(internalView != nil)
+    }
 
-        assert(view != nil)
-        assert(controller != nil, "controller binding is required")
+    open func viewDidLoad() {
+        assert(controller != nil, "This view binding is not connected to controls bindings outlet")
 
-        self.viewContext = VIPERViewContext(controller: controller)
-        self.view?.viewContext = self.viewContext
+        self.internalView?.viewContext = self.viewContext
+    }
+
+    open func viewWillAppear() {
+
+    }
+
+    open func viewDidAppear() {
+
+    }
+
+    open func viewWillLayout() {
+
+    }
+
+    open func viewDidLayout() {
+
+    }
+
+    open func viewWillDisappear() {
+
+    }
+
+    open func viewDidDisappear() {
+
     }
 }

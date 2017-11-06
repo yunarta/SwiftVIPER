@@ -1,6 +1,7 @@
 use_frameworks!
 target 'SwiftVIPER_Tests' do
+  platform :ios, '8.0'
+
   pod 'SwiftVIPER', :path => '../'
-  
-  
+  pod 'SwiftVIPER/UIKitTable', :path => '../'
 end
