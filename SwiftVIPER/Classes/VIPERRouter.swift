@@ -79,7 +79,8 @@ extension PlatformViewController: VIPERRouter {
     func willPerformRouting(_ controller: UIViewController, intent: Intent) -> Bool
 }
 
-extension PlatformViewController {
+#if os(macOS)
+public extension NSViewController {
 
     private static var keyForRouting = "keyForRouting"
 
@@ -95,3 +96,21 @@ extension PlatformViewController {
         }
     }
 }
+#else
+public extension UIViewController {
+
+    private static var keyForRouting = "keyForRouting"
+
+    /** With VIPER, a view controller created by routing may have an intent set to define its behavior.
+     */
+    @IBOutlet public var routing: VIPERRouting? {
+        get {
+            return objc_getAssociatedObject(self, &UIViewController.keyForRouting) as? VIPERRouting
+        }
+
+        set(value) {
+            objc_setAssociatedObject(self, &UIViewController.keyForRouting, value, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+        }
+    }
+}
+#endif

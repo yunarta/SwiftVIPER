@@ -10,6 +10,8 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		99696D6B203E9E070035A8F7 /* Playground.h in Headers */ = {isa = PBXBuildFile; fileRef = 99696D69203E9E070035A8F7 /* Playground.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99696D70203E9E230035A8F7 /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99696D6F203E9E230035A8F7 /* Playground.swift */; };
+		99696D73203EAB330035A8F7 /* RoutingDemo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99696D72203EAB330035A8F7 /* RoutingDemo.storyboard */; };
+		99696D75203EAB3C0035A8F7 /* RoutingDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99696D74203EAB3C0035A8F7 /* RoutingDemo.swift */; };
 		BD037799FC87E904D12ED90C /* Pods_SwiftVIPER_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5817243CEC9A8689708C943 /* Pods_SwiftVIPER_Tests.framework */; };
 		EB7FFC1A83476573155C6E19 /* Pods_Playground.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57C7AB54DA68988FC0DA5291 /* Pods_Playground.framework */; };
 /* End PBXBuildFile section */
@@ -24,11 +26,14 @@
 		74B93610A8BAAF60A328928D /* Pods-Playground.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Playground.release.xcconfig"; path = "Pods/Target Support Files/Pods-Playground/Pods-Playground.release.xcconfig"; sourceTree = "<group>"; };
 		87214B1015A536219986AFD6 /* Pods-SwiftVIPER_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVIPER_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVIPER_Tests/Pods-SwiftVIPER_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8C6CD6CE07A1A2231C91F338 /* Pods-SwiftVIPER_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVIPER_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVIPER_Tests/Pods-SwiftVIPER_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		991D9988203EC6930050A804 /* RoutingViewControllerDemo.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = RoutingViewControllerDemo.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		99696D67203E9E070035A8F7 /* Playground.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Playground.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99696D69203E9E070035A8F7 /* Playground.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Playground.h; sourceTree = "<group>"; };
 		99696D6A203E9E070035A8F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99696D6F203E9E230035A8F7 /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
 		99696D71203E9E7A0035A8F7 /* RoutingPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = RoutingPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		99696D72203EAB330035A8F7 /* RoutingDemo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RoutingDemo.storyboard; sourceTree = "<group>"; };
+		99696D74203EAB3C0035A8F7 /* RoutingDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingDemo.swift; sourceTree = "<group>"; };
 		9BE33AD98E091C5AB09ED401 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		C5817243CEC9A8689708C943 /* Pods_SwiftVIPER_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftVIPER_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E77CE1803E0747B4C593AB39 /* SwiftVIPER.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SwiftVIPER.podspec; path = ../SwiftVIPER.podspec; sourceTree = "<group>"; };
@@ -125,10 +130,13 @@
 		99696D68203E9E070035A8F7 /* Playground */ = {
 			isa = PBXGroup;
 			children = (
+				991D9988203EC6930050A804 /* RoutingViewControllerDemo.playground */,
 				99696D71203E9E7A0035A8F7 /* RoutingPlayground.playground */,
 				99696D69203E9E070035A8F7 /* Playground.h */,
 				99696D6A203E9E070035A8F7 /* Info.plist */,
 				99696D6F203E9E230035A8F7 /* Playground.swift */,
+				99696D72203EAB330035A8F7 /* RoutingDemo.storyboard */,
+				99696D74203EAB3C0035A8F7 /* RoutingDemo.swift */,
 			);
 			path = Playground;
 			sourceTree = "<group>";
@@ -242,6 +250,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99696D73203EAB330035A8F7 /* RoutingDemo.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99696D70203E9E230035A8F7 /* Playground.swift in Sources */,
+				99696D75203EAB3C0035A8F7 /* RoutingDemo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
