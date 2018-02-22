@@ -15,8 +15,8 @@ matcher.addRoute(authority: "application", path: "/user/#") { intent -> Bool in
     print("found matches /user/#/detail for \(intent.data!)")
     return true
 }.addRoute(authority: "application", path: "/item/*") { intent -> Bool in
-        print("found matches /user/#/detail for \(intent.data!))")
-        return true
+    print("found matches /user/#/detail for \(intent.data!))")
+    return true
 }
 
 

@@ -1,7 +1,6 @@
 //: Playground - noun: a place where people can play
 
 import PlaygroundSupport
-import Playground
 import SwiftVIPER
 import UIKit
 
