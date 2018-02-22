@@ -5,7 +5,7 @@
 
 import Foundation
 
-public class GenericRouteMatcher<MatchResult> {
+public class GenericURLMatcher<MatchResult> {
 
     enum RouteMatcherType {
         case none, exact, number, text
@@ -139,15 +139,32 @@ public class GenericRouteMatcher<MatchResult> {
     }
 }
 
-public class RouteMatcher: GenericRouteMatcher<() -> Bool> {
+public class IntentRouter {
 
-    public init() {
-        super.init { return false }
+    let matcher: GenericURLMatcher<(Intent) -> Bool>
+
+    public init(_ `default`: @escaping (Intent) -> Bool) {
+        matcher = GenericURLMatcher<(Intent) -> Bool>(`default`)
     }
 
-    public func onMatch(_ url: URL) -> Bool {
-        let result = super.match(url)
-        return result()
+    public convenience init() {
+        self.init { (intent) -> Bool in
+            return false
+        }
+    }
+
+    public func addRoute(authority: String, path: String, action: @escaping (Intent) -> Bool) -> Self {
+        _ = matcher.addRoute(authority: authority, path: path, result: action)
+        return self
+    }
+    
+    public func match(_ intent: Intent) -> Bool {
+        guard let url = intent.data else {
+            return false
+        }
+        
+        let result = matcher.match(url)
+        return result(intent)
     }
 }
 

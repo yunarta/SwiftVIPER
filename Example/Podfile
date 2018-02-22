@@ -5,3 +5,9 @@ target 'SwiftVIPER_Tests' do
   pod 'SwiftVIPER', :path => '../'
   pod 'SwiftVIPER/UIKitTable', :path => '../'
 end
+
+target 'Playground' do
+    platform :ios, '8.0'
+    
+    pod 'SwiftVIPER', :path => '../'
+end
