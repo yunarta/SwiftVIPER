@@ -109,7 +109,7 @@ extension VIPERPresenter {
 //        `internal`.dispatchPendingResult()
 //    }
 
-    func onActivityResult(of requestCode: Int, with resultCode: Int, intent: Intent?) {
+    public func onActivityResult(of requestCode: Int, with resultCode: Int, intent: Intent?) {
 
     }
 }
