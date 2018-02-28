@@ -1,13 +1,21 @@
 use_frameworks!
-target 'SwiftVIPER_Tests' do
-  platform :ios, '8.0'
 
-  pod 'SwiftVIPER', :path => '../'
-  pod 'SwiftVIPER/UIKitTable', :path => '../'
+def shared
+    pod 'SwiftVIPER', :path => '../'
+    pod 'SwiftVIPER/UIKitTable', :path => '../'
+end
+
+target 'SwiftVIPERDemo' do
+    platform :ios, '8.0'
+    shared
+end
+
+target 'SwiftVIPER_Tests' do
+    platform :ios, '8.0'
+    shared
 end
 
 target 'Playground' do
     platform :ios, '8.0'
-    
-    pod 'SwiftVIPER', :path => '../'
+    shared
 end
