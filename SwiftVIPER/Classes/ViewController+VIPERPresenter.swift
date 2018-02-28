@@ -6,9 +6,6 @@ import Foundation
 
 extension PlatformViewController {
 
-    
-    
-    
 }
 
 public class Presenters {
