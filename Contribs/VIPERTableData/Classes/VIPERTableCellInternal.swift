@@ -51,29 +51,3 @@ extension VIPERTableCellViewBase {
         context.viewContext = dataSource.viewContext
     }
 }
-
-/** Internal side of VIPER Table CellView, used for delegating layout and presenter method used internally by VIPERTable Data
- */
-extension VIPERTableCellView where Self: UITableViewCell {
-    
-    public func estimateLayoutSize() -> CGSize {
-        return cellView.estimateLayoutSize()
-    }
-    
-    public func computeLayoutSize() -> CGSize {
-        return cellView.estimateLayoutSize()
-    }
-    
-    public func present(table: VIPERTable, data: Presenter.Data) {
-        guard let presenter = self.presenter else {
-            return
-        }
-        
-        cellView.cell = self
-        cellView.viewContext = context.viewContext
-        
-        if let cell = cellView.view as? PresenterView {
-            presenter.present(table: table, view: cell, data: data)
-        }
-    }
-}

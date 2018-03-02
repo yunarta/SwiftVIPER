@@ -70,11 +70,10 @@ class TextCell: UITableViewCell, VIPERTableCellView {
 
 class TextCell2: VIPERTableCell<TextCellPresenter, TextCellViewBinding> {
   
-    @IBOutlet weak var binding: TextCellViewBinding! {
-        didSet {
-            cellView = binding
-        }
+    override var cellView: TextCellViewBinding {
+        return binding
     }
+    @IBOutlet weak var binding: TextCellViewBinding!
     
     override func awakeFromNib() {
         presenter = TextCellPresenter()

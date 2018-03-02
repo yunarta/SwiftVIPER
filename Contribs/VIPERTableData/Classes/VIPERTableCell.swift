@@ -3,7 +3,7 @@
 // Copyright (c) 2017 CocoaPods. All rights reserved.
 //
 
-
+import UIKit
 
 var keyVIPERCellViewCell = "keyVIPERCellViewCell"
 var keyVIPERCellViewContext = "keyVIPERCellViewContext"
@@ -12,7 +12,7 @@ var keyVIPERCellViewContext = "keyVIPERCellViewContext"
 
 /** The VIPER View class in VIPERUIKitTable
  */
-public protocol VIPERCellViewBase: class {
+public protocol VIPERCellViewBase: class, NSObjectProtocol {
     
     func estimateLayoutSize() -> CGSize
     
@@ -105,24 +105,58 @@ public protocol VIPERTableCellView: VIPERTableCellViewBase {
 
     associatedtype Presenter: VIPERCellPresenter
 
-    typealias PresenterView = Presenter.View
-    
     associatedtype CellView: VIPERCellView
     
-    var presenter: Presenter? { get set }
+    typealias PresenterView = Presenter.View
     
+    typealias CellViewInterface = CellView.View
+    
+    var presenter: Presenter? { get set }
+
     var cellView: CellView { get }
+    
+    var view: CellViewInterface { get }
+    
+    func estimateLayoutSize() -> CGSize
+    
+    func computeLayoutSize() -> CGSize
+}
+
+/** Internal side of VIPER Table CellView, used for delegating layout and presenter method used internally by VIPERTable Data
+ */
+extension VIPERTableCellView where Self: UITableViewCell {
+    
+    public func estimateLayoutSize() -> CGSize {
+        return cellView.estimateLayoutSize()
+    }
+    
+    public func computeLayoutSize() -> CGSize {
+        return cellView.estimateLayoutSize()
+    }
+    
+    public func present(table: VIPERTable, data: Presenter.Data) {
+        guard let presenter = self.presenter else {
+            return
+        }
+        
+        cellView.cell = self
+        cellView.viewContext = context.viewContext
+        
+        if let cell = cellView.view as? PresenterView {
+            presenter.present(table: table, view: cell, data: data)
+        }
+    }
 }
 
 open class VIPERTableCell<Presenter, CellView>: UITableViewCell, VIPERTableCellViewBase where Presenter: VIPERCellPresenter, CellView: VIPERCellView, Presenter.View == CellView.View {
     
-    public var presenter: Presenter?
+    open var presenter: Presenter?
     
-    public weak var cellView: CellView?
+    open var cellView: CellView?
     
-    public var layoutMode: VIPERTableCellViewLayoutMode = .autoLayout
+    open var layoutMode: VIPERTableCellViewLayoutMode = .autoLayout
     
-    public var layoutView: UIView?
+    open var layoutView: UIView?
 
     public func estimateLayoutSize() -> CGSize {
         return cellView?.estimateLayoutSize() ?? CGSize.zero
@@ -141,8 +175,4 @@ open class VIPERTableCell<Presenter, CellView>: UITableViewCell, VIPERTableCellV
         
         presenter.present(table: table, view: cellView.view, data: data)
     }
-}
-
-public class CellPresenterController<Delegate> where Delegate: VIPERCellPresenter {
-    
 }
