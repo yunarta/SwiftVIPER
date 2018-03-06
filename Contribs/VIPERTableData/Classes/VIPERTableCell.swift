@@ -7,6 +7,7 @@ import UIKit
 
 var keyVIPERCellViewCell = "keyVIPERCellViewCell"
 var keyVIPERCellViewContext = "keyVIPERCellViewContext"
+var keyVIPERCellViewTableFrameSize = "keyVIPERCellViewTableFrameSize"
 
 // MARK: - VIPER View
 
@@ -14,9 +15,17 @@ var keyVIPERCellViewContext = "keyVIPERCellViewContext"
  */
 public protocol VIPERCellViewBase: class {
     
-    func estimateLayoutSize() -> CGSize
+    func estimateLayoutSize(fit: CGSize) -> CGSize
     
-    func computeLayoutSize() -> CGSize
+    func computeLayoutSize(fit: CGSize) -> CGSize
+}
+
+public protocol AutoLayoutCellView {
+    
+}
+
+public protocol ManualLayoutCellView {
+    
 }
 
 extension VIPERCellViewBase {
@@ -41,11 +50,24 @@ extension VIPERCellViewBase {
         }
     }
     
-    public func estimateLayoutSize() -> CGSize {
+    public internal (set) var tableFrameSize: CGSize {
+        get {
+            return (objc_getAssociatedObject(self, &keyVIPERCellViewTableFrameSize) as? CGSize) ?? CGSize.zero
+        }
+        
+        set(value) {
+            objc_setAssociatedObject(self, &keyVIPERCellViewTableFrameSize, value, objc_AssociationPolicy.OBJC_ASSOCIATION_COPY)
+        }
+    }
+}
+
+extension VIPERCellViewBase where Self: AutoLayoutCellView {
+    
+    public func estimateLayoutSize(fit: CGSize) -> CGSize {
         return CGSize.zero
     }
     
-    public func computeLayoutSize() -> CGSize {
+    public func computeLayoutSize(fit: CGSize) -> CGSize {
         return CGSize.zero
     }
 }
@@ -88,9 +110,9 @@ public protocol VIPERTableCellViewBase {
      */
     var layoutView: UIView? { get }
     
-    func estimateLayoutSize() -> CGSize
+    func estimateLayoutSize(fit: CGSize) -> CGSize
     
-    func computeLayoutSize() -> CGSize
+    func computeLayoutSize(fit: CGSize) -> CGSize
     
     // MARK: - UITableViewCell
     var contentView: UIView { get }
@@ -114,23 +136,45 @@ public protocol VIPERTableCellView: VIPERTableCellViewBase {
 
     var cellView: CellView { get }
     
-    func estimateLayoutSize() -> CGSize
+    func estimateLayoutSize(fit: CGSize) -> CGSize
     
-    func computeLayoutSize() -> CGSize
+    func computeLayoutSize(fit: CGSize) -> CGSize
 }
 
 /** Internal side of VIPER Table CellView, used for delegating layout and presenter method used internally by VIPERTable Data
  */
+extension VIPERTableCellView where Self: UITableViewCell, CellView: AutoLayoutCellView {
+    
+    public var layoutMode: VIPERTableCellViewLayoutMode {
+        return .autoLayout
+    }
+    
+    public func estimateLayoutSize(fit: CGSize) -> CGSize {
+        return CGSize.zero
+    }
+    
+    public func computeLayoutSize(fit: CGSize) -> CGSize {
+        return CGSize.zero
+    }
+}
+
+extension VIPERTableCellView where Self: UITableViewCell, CellView: ManualLayoutCellView {
+    
+    public var layoutMode: VIPERTableCellViewLayoutMode {
+        return .manualLayout
+    }
+    
+    public func estimateLayoutSize(fit: CGSize) -> CGSize {
+        return cellView.estimateLayoutSize(fit: fit)
+    }
+    
+    public func computeLayoutSize(fit: CGSize) -> CGSize {
+        return cellView.estimateLayoutSize(fit: fit)
+    }
+}
+
 extension VIPERTableCellView where Self: UITableViewCell {
-    
-    public func estimateLayoutSize() -> CGSize {
-        return cellView.estimateLayoutSize()
-    }
-    
-    public func computeLayoutSize() -> CGSize {
-        return cellView.estimateLayoutSize()
-    }
-    
+     
     public func present(table: VIPERTable, data: Presenter.Data) {
         guard let presenter = self.presenter else {
             return

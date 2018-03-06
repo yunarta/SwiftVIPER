@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		992C7D80204E8B7100C70CBB /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C7D7F204E8B7100C70CBB /* TextCell.swift */; };
+		992C7D82204E8D8E00C70CBB /* MultiTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C7D81204E8D8E00C70CBB /* MultiTypeTableViewController.swift */; };
+		992C7D84204E8F5600C70CBB /* MultiTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C7D83204E8F5600C70CBB /* MultiTextCell.swift */; };
+		992C7D86204E913D00C70CBB /* SingleLineTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992C7D85204E913D00C70CBB /* SingleLineTextCell.xib */; };
+		992C7D88204E915B00C70CBB /* MultiLineTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992C7D87204E915B00C70CBB /* MultiLineTextCell.xib */; };
 		99696D6B203E9E070035A8F7 /* Playground.h in Headers */ = {isa = PBXBuildFile; fileRef = 99696D69203E9E070035A8F7 /* Playground.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99696D70203E9E230035A8F7 /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99696D6F203E9E230035A8F7 /* Playground.swift */; };
 		99F227DB2046960000CDAE63 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F227DA2046960000CDAE63 /* AppDelegate.swift */; };
@@ -35,6 +39,10 @@
 		8C6CD6CE07A1A2231C91F338 /* Pods-SwiftVIPER_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVIPER_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVIPER_Tests/Pods-SwiftVIPER_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		991D9988203EC6930050A804 /* Routing in ViewController Demo.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Routing in ViewController Demo.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		992C7D7F204E8B7100C70CBB /* TextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
+		992C7D81204E8D8E00C70CBB /* MultiTypeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiTypeTableViewController.swift; sourceTree = "<group>"; };
+		992C7D83204E8F5600C70CBB /* MultiTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiTextCell.swift; sourceTree = "<group>"; };
+		992C7D85204E913D00C70CBB /* SingleLineTextCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SingleLineTextCell.xib; sourceTree = "<group>"; };
+		992C7D87204E915B00C70CBB /* MultiLineTextCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MultiLineTextCell.xib; sourceTree = "<group>"; };
 		99696D67203E9E070035A8F7 /* Playground.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Playground.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99696D69203E9E070035A8F7 /* Playground.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Playground.h; sourceTree = "<group>"; };
 		99696D6A203E9E070035A8F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -176,12 +184,16 @@
 			isa = PBXGroup;
 			children = (
 				99F227DA2046960000CDAE63 /* AppDelegate.swift */,
-				99F227DC2046960000CDAE63 /* SingleTypeTableViewController.swift */,
-				99F227DE2046960000CDAE63 /* Main.storyboard */,
 				99F227E12046960000CDAE63 /* Assets.xcassets */,
-				99F227E32046960000CDAE63 /* LaunchScreen.storyboard */,
 				99F227E62046960000CDAE63 /* Info.plist */,
+				99F227E32046960000CDAE63 /* LaunchScreen.storyboard */,
+				99F227DE2046960000CDAE63 /* Main.storyboard */,
+				99F227DC2046960000CDAE63 /* SingleTypeTableViewController.swift */,
+				992C7D81204E8D8E00C70CBB /* MultiTypeTableViewController.swift */,
 				992C7D7F204E8B7100C70CBB /* TextCell.swift */,
+				992C7D83204E8F5600C70CBB /* MultiTextCell.swift */,
+				992C7D85204E913D00C70CBB /* SingleLineTextCell.xib */,
+				992C7D87204E915B00C70CBB /* MultiLineTextCell.xib */,
 			);
 			path = SwiftVIPERDemo;
 			sourceTree = "<group>";
@@ -330,6 +342,8 @@
 			files = (
 				99F227E52046960000CDAE63 /* LaunchScreen.storyboard in Resources */,
 				99F227E22046960000CDAE63 /* Assets.xcassets in Resources */,
+				992C7D86204E913D00C70CBB /* SingleLineTextCell.xib in Resources */,
+				992C7D88204E915B00C70CBB /* MultiLineTextCell.xib in Resources */,
 				99F227E02046960000CDAE63 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -496,6 +510,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				99F227DD2046960000CDAE63 /* SingleTypeTableViewController.swift in Sources */,
+				992C7D84204E8F5600C70CBB /* MultiTextCell.swift in Sources */,
+				992C7D82204E8D8E00C70CBB /* MultiTypeTableViewController.swift in Sources */,
 				992C7D80204E8B7100C70CBB /* TextCell.swift in Sources */,
 				99F227DB2046960000CDAE63 /* AppDelegate.swift in Sources */,
 			);

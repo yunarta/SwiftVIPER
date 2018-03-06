@@ -21,48 +21,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="L1D-ys-Ihe">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Text" rowHeight="100" id="80x-5t-VVf" customClass="TextCell" customModule="SwiftVIPERDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="100"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="80x-5t-VVf" id="d8s-cf-ptH">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5hr-Dk-FqG" customClass="TextCellViewBinding" customModule="SwiftVIPERDemo" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Od-gZ-Z8Q">
-                                                            <rect key="frame" x="16" y="16" width="343" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstItem="1Od-gZ-Z8Q" firstAttribute="top" secondItem="5hr-Dk-FqG" secondAttribute="top" constant="16" id="Jia-eJ-c96"/>
-                                                        <constraint firstItem="1Od-gZ-Z8Q" firstAttribute="leading" secondItem="5hr-Dk-FqG" secondAttribute="leading" constant="16" id="S5S-G6-uoM"/>
-                                                        <constraint firstAttribute="trailing" secondItem="1Od-gZ-Z8Q" secondAttribute="trailing" constant="16" id="hqQ-qz-RBd"/>
-                                                        <constraint firstAttribute="bottom" secondItem="1Od-gZ-Z8Q" secondAttribute="bottom" constant="16" id="o5r-iT-As3"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <outlet property="label" destination="1Od-gZ-Z8Q" id="WvB-T3-cNj"/>
-                                                    </connections>
-                                                </view>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="5hr-Dk-FqG" firstAttribute="leading" secondItem="d8s-cf-ptH" secondAttribute="leading" id="0sd-34-o04"/>
-                                                <constraint firstAttribute="trailing" secondItem="5hr-Dk-FqG" secondAttribute="trailing" id="Ux3-Xg-bIm"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="5hr-Dk-FqG" secondAttribute="bottom" id="kfp-bJ-mPM"/>
-                                                <constraint firstItem="5hr-Dk-FqG" firstAttribute="top" secondItem="d8s-cf-ptH" secondAttribute="top" id="rnj-Qc-C0v"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="binding" destination="5hr-Dk-FqG" id="4dW-97-ICd"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -88,10 +46,10 @@
             </objects>
             <point key="canvasLocation" x="548" y="133.5832083958021"/>
         </scene>
-        <!--View Controller-->
+        <!--Multi Type Table View Controller-->
         <scene sceneID="b6P-N4-vnf">
             <objects>
-                <viewController id="fnK-jU-JCw" sceneMemberID="viewController">
+                <viewController id="fnK-jU-JCw" customClass="MultiTypeTableViewController" customModule="SwiftVIPERDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rlb-wh-LxT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -99,24 +57,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PgN-Jc-S9Z">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Text" id="cft-zd-VCC" customClass="TextCell" customModule="SwiftVIPERDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cft-zd-VCC" id="53j-OR-tYY">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Manual" id="BuN-yM-4Io">
-                                        <rect key="frame" x="0.0" y="72" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BuN-yM-4Io" id="i6q-jr-6Uo">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -129,7 +69,15 @@
                         <viewLayoutGuide key="safeArea" id="Mab-WT-w10"/>
                     </view>
                     <navigationItem key="navigationItem" id="gtw-F1-xkt"/>
+                    <connections>
+                        <outletCollection property="bindings" destination="HC8-Gy-W3m" collectionClass="NSMutableArray" id="8lP-O9-FxL"/>
+                    </connections>
                 </viewController>
+                <customObject id="HC8-Gy-W3m" customClass="MultiTypeTableViewBinding" customModule="SwiftVIPERDemo" customModuleProvider="target">
+                    <connections>
+                        <outlet property="tableView" destination="PgN-Jc-S9Z" id="dRZ-Lv-XiF"/>
+                    </connections>
+                </customObject>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YqK-QW-wEZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="548" y="825.33733133433293"/>

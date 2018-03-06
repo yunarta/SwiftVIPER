@@ -47,6 +47,7 @@ class TextTableViewBinding: VIPERTableViewBinding, VIPERViewBindingInterface {
             return
         }
         
+        tableView.register(UINib(nibName: "SingleLineTextCell", bundle: Bundle.main), forCellReuseIdentifier: "Text")
         tableData.install(to: tableView)
     }
 }

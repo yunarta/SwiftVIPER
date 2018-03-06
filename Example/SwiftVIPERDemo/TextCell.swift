@@ -28,7 +28,7 @@ class TextCellViewImpl: TextCellView {
     }
 }
 
-class TextCellViewBinding: UIView, VIPERCellView {
+class TextCellViewBinding: UIView, VIPERCellView, AutoLayoutCellView {
     
     let viewImpl = TextCellViewImpl()
     var view: TextCellView {
@@ -37,11 +37,7 @@ class TextCellViewBinding: UIView, VIPERCellView {
     
     @IBOutlet weak var label: UILabel! {
         didSet {
-            viewImpl.observableText.onChange { [weak self] value in
-                
-                print("cell = \(String(describing: self?.cell))")
-                print("viewContext = \(String(describing: self?.viewContext))")
-                
+            viewImpl.observableText.onChange { [weak self] value in               
                 self?.label.text = "abc \(value)"
             }
         }
@@ -59,9 +55,7 @@ class TextCellPresenter: VIPERCellPresenter {
 class TextCell: UITableViewCell, VIPERTableCellView {
     
     var presenter: TextCellPresenter? = TextCellPresenter()
-    
-    var layoutMode: VIPERTableCellViewLayoutMode = .autoLayout
-    
+        
     var layoutView: UIView?
     
     var delegate: TextCellPresenter?
