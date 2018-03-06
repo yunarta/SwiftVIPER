@@ -7,8 +7,9 @@ import UIKit
 
 public typealias CellCreationInfo = (id: Int, nib: String)
 
-public protocol VIPERTable {
+public protocol VIPERTable: class {
 
+    func install(to table: UITableView)
 }
 
 private var keyVIPERTableRouter = "keyVIPERTableRouter"
@@ -16,7 +17,7 @@ private var keyVIPERTableViewContent = "keyVIPERTableViewContent"
 
 extension VIPERTable {
     
-    var router: VIPERRouter? {
+    public var router: VIPERRouter? {
         get {
             return (objc_getAssociatedObject(self, &keyVIPERTableRouter) as? VIPERRouter)
         }
@@ -26,7 +27,7 @@ extension VIPERTable {
         }
     }
     
-    var viewContext: VIPERViewContext? {
+    public var viewContext: VIPERViewContext? {
         get {
             return (objc_getAssociatedObject(self, &keyVIPERTableViewContent) as? VIPERViewContext)
         }
@@ -34,7 +35,7 @@ extension VIPERTable {
         set(value) {
             objc_setAssociatedObject(self, &keyVIPERTableViewContent, value, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
         }
-    }
+    }    
 }
 
 public protocol VIPERTableDataSource: class {

@@ -12,7 +12,7 @@ var keyVIPERCellViewContext = "keyVIPERCellViewContext"
 
 /** The VIPER View class in VIPERUIKitTable
  */
-public protocol VIPERCellViewBase: class, NSObjectProtocol {
+public protocol VIPERCellViewBase: class {
     
     func estimateLayoutSize() -> CGSize
     
@@ -56,6 +56,7 @@ public protocol VIPERCellView: VIPERCellViewBase {
     
     var view: View { get }
 }
+
 // MARK: - VIPER Presenter
 
 /** The VIPER Presenter class in VIPERUIKitTable
@@ -109,13 +110,9 @@ public protocol VIPERTableCellView: VIPERTableCellViewBase {
     
     typealias PresenterView = Presenter.View
     
-    typealias CellViewInterface = CellView.View
-    
     var presenter: Presenter? { get set }
 
     var cellView: CellView { get }
-    
-    var view: CellViewInterface { get }
     
     func estimateLayoutSize() -> CGSize
     
@@ -142,37 +139,10 @@ extension VIPERTableCellView where Self: UITableViewCell {
         cellView.cell = self
         cellView.viewContext = context.viewContext
         
+        assert(cellView.view is PresenterView)
         if let cell = cellView.view as? PresenterView {
             presenter.present(table: table, view: cell, data: data)
         }
     }
 }
 
-open class VIPERTableCell<Presenter, CellView>: UITableViewCell, VIPERTableCellViewBase where Presenter: VIPERCellPresenter, CellView: VIPERCellView, Presenter.View == CellView.View {
-    
-    open var presenter: Presenter?
-    
-    open var cellView: CellView?
-    
-    open var layoutMode: VIPERTableCellViewLayoutMode = .autoLayout
-    
-    open var layoutView: UIView?
-
-    public func estimateLayoutSize() -> CGSize {
-        return cellView?.estimateLayoutSize() ?? CGSize.zero
-    }
-    
-    public func computeLayoutSize() -> CGSize {
-        return cellView?.estimateLayoutSize() ?? CGSize.zero
-    }
-    
-    public func present(table: VIPERTable, data: Presenter.Data) {
-        guard let presenter = self.presenter, let cellView = cellView else {
-            return
-        }
-        cellView.cell = self
-        cellView.viewContext = context.viewContext
-        
-        presenter.present(table: table, view: cellView.view, data: data)
-    }
-}

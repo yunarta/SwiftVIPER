@@ -38,6 +38,10 @@ class TextCellViewBinding: UIView, VIPERCellView {
     @IBOutlet weak var label: UILabel! {
         didSet {
             viewImpl.observableText.onChange { [weak self] value in
+                
+                print("cell = \(String(describing: self?.cell))")
+                print("viewContext = \(String(describing: self?.viewContext))")
+                
                 self?.label.text = "abc \(value)"
             }
         }
@@ -51,8 +55,9 @@ class TextCellPresenter: VIPERCellPresenter {
     }
 }
 
-class TextCell: UITableViewCell, VIPERTableCellView {
 
+class TextCell: UITableViewCell, VIPERTableCellView {
+ 
     var presenter: TextCellPresenter? = TextCellPresenter()
 
     var layoutMode: VIPERTableCellViewLayoutMode = .autoLayout
@@ -68,18 +73,6 @@ class TextCell: UITableViewCell, VIPERTableCellView {
     @IBOutlet weak var binding: TextCellViewBinding!
 }
 
-class TextCell2: VIPERTableCell<TextCellPresenter, TextCellViewBinding> {
-  
-    override var cellView: TextCellViewBinding {
-        return binding
-    }
-    @IBOutlet weak var binding: TextCellViewBinding!
-    
-    override func awakeFromNib() {
-        presenter = TextCellPresenter()
-    }
-}
-
 class StringData: VIPERTableDataSource, SingleType {
 
     func creationInfo(table: VIPERTable) -> CellCreationInfo {
@@ -87,25 +80,46 @@ class StringData: VIPERTableDataSource, SingleType {
     }
 
     func table(table: VIPERTable, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 1
     }
 
-    func present(table: VIPERTable, view: TextCell2, at indexPath: IndexPath) {
+    func present(table: VIPERTable, view: TextCell, at indexPath: IndexPath) {
         view.present(table: table, data: "data \(indexPath.row)")
     }
 }
 
-class ViewController: UIViewController {
+class TextTableView: VIPERViewInterface {
+    
+}
 
+class TextTableViewBinding: VIPERTableViewBinding, VIPERViewBindingInterface {
+    
+    let tableData = VIPERTableData<StringData>(dataSource: StringData())
+    
+    var view = TextTableView()
+    
     @IBOutlet weak var tableView: UITableView?
     
-    let data = VIPERTableData<StringData>(dataSource: StringData())
+    required init() {
+        super.init(view: view, tableData: tableData)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView?.delegate = data
-        tableView?.dataSource = data
+        guard let tableView = tableView else {
+            return
+        }
+        
+        tableData.install(to: tableView)
+    }
+}
+
+class ViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        dispatchViewDidLoad()
     }
 
     override func didReceiveMemoryWarning() {

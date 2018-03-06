@@ -7,16 +7,18 @@ import UIKit
 public typealias VIPERTableViewBindingOutlet = VIPERTableViewBinding & VIPERViewBindingInterface
 
 open class VIPERTableViewBinding: VIPERViewBinding {
+    
+    weak var internalTableData: VIPERTable?
 
-    weak var internalDataSource: VIPERTableDataSource?
-
-    public init(view: VIPERViewInterface, dataSource: VIPERTableDataSource) {
-        self.internalDataSource = dataSource
+    public init(view: VIPERViewInterface, tableData: VIPERTable) {
+        self.internalTableData = tableData
         super.init(view: view)
     }
 
-    override open func awakeFromNib() {
-        super.awakeFromNib()
-        assert(internalDataSource != nil)
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        assert(internalTableData != nil)
+        
+        internalTableData?.install(router: controller?.router, viewContext: viewContext)
     }
 }

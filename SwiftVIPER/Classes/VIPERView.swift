@@ -41,6 +41,17 @@ public typealias VIPERViewBindingOutlet = VIPERViewBinding & VIPERViewBindingInt
     init()
 }
 
+enum VIPERViewBindingState {
+    case none
+    case viewDidLoad
+    case viewWillAppear
+    case viewDidAppear
+    case viewWillLayout
+    case viewDidLayout
+    case viewWillDisappear
+    case viewDidDisappear
+}
+
 open class VIPERViewBinding: NSObject {
 
     public internal (set) weak var controller: PlatformViewController? {
@@ -53,6 +64,8 @@ open class VIPERViewBinding: NSObject {
 
     weak var internalView: VIPERViewInterface?
 
+    var state: VIPERViewBindingState = .none
+    
     public init(view: VIPERViewInterface) {
         super.init()
         self.internalView = view
@@ -66,30 +79,31 @@ open class VIPERViewBinding: NSObject {
     open func viewDidLoad() {
         assert(controller != nil, "This view binding is not connected to controls bindings outlet")
 
-        self.internalView?.viewContext = self.viewContext
+        internalView?.viewContext = viewContext
+        state = .viewDidLoad
     }
 
     open func viewWillAppear() {
-
+        state = .viewWillAppear
     }
 
     open func viewDidAppear() {
-
+        state = .viewDidAppear
     }
 
     open func viewWillLayout() {
-
+        state = .viewWillLayout
     }
 
     open func viewDidLayout() {
-
+        state = .viewDidLayout
     }
 
     open func viewWillDisappear() {
-
+        state = .viewWillDisappear
     }
 
     open func viewDidDisappear() {
-
+        state = .viewDidDisappear
     }
 }

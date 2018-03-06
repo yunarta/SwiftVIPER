@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Text" rowHeight="100" id="80x-5t-VVf" customClass="TextCell2" customModule="SwiftVIPERDemo" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Text" rowHeight="100" id="80x-5t-VVf" customClass="TextCell" customModule="SwiftVIPERDemo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="80x-5t-VVf" id="d8s-cf-ptH">
@@ -76,10 +76,15 @@
                     </view>
                     <navigationItem key="navigationItem" id="PZx-dK-eI0"/>
                     <connections>
-                        <outlet property="tableView" destination="L1D-ys-Ihe" id="Dyw-bZ-dOi"/>
+                        <outletCollection property="bindings" destination="4wE-Gg-WHL" collectionClass="NSMutableArray" id="mtZ-KX-SCV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <customObject id="4wE-Gg-WHL" customClass="TextTableViewBinding" customModule="SwiftVIPERDemo" customModuleProvider="target">
+                    <connections>
+                        <outlet property="tableView" destination="L1D-ys-Ihe" id="cjF-xJ-YfU"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="548" y="133.5832083958021"/>
         </scene>

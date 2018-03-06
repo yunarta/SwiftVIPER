@@ -46,8 +46,8 @@ extension VIPERTableCellViewBase {
         return context
     }
     
-    func configureContext(from dataSource: VIPERTableDataSource) {
-        context.router = dataSource.router
-        context.viewContext = dataSource.viewContext
+    func configureContext<E>(from data: VIPERTableData<E>) {
+        context.router = data.router
+        context.viewContext = data.viewContext
     }
 }

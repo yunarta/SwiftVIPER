@@ -85,7 +85,7 @@ public struct VIPERTableOptions {
 
 open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSource, UITableViewDelegate where DataSource: VIPERTableDataSource {
     
-    var dataSource: DataSource
+    public var dataSource: DataSource
     
     var handler: DataSourceHandler
     
@@ -105,6 +105,11 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
         super.init()
     }
     
+    open func install(to table: UITableView) {
+        table.dataSource = self
+        table.delegate = self
+    }
+    
     // MARK: - UITableViewDataSource
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -119,7 +124,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
                 
                 context.indexPath = indexPath
                 if context.isNeedConfiguration {
-                    cell.configureContext(from: dataSource)
+                    cell.configureContext(from: self)
                 }
                 
                 dataSource.cell(table: self, id: id, configure: cell, at: indexPath)
