@@ -29,6 +29,13 @@ class MultilineTextCellViewImpl: MultilineTextCellView {
     }
 }
 
+class MultilineTextCellPresenter: VIPERCellPresenter {
+    
+    func present(table: VIPERTable, view: MultilineTextCellView, data: String) {
+        view.text = data
+    }
+}
+
 class MultilineTextCellViewBinding: UIView, VIPERCellView, ManualLayoutCellView {
     
     func estimateLayoutSize(fit: CGSize) -> CGSize {
@@ -54,14 +61,6 @@ class MultilineTextCellViewBinding: UIView, VIPERCellView, ManualLayoutCellView 
         }
     }
 }
-
-class MultilineTextCellPresenter: VIPERCellPresenter {
-    
-    func present(table: VIPERTable, view: MultilineTextCellView, data: String) {
-        view.text = data
-    }
-}
-
 
 class MultilineTextCell: UITableViewCell, VIPERTableCellView {
     

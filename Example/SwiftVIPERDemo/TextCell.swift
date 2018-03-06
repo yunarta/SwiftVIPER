@@ -28,6 +28,13 @@ class TextCellViewImpl: TextCellView {
     }
 }
 
+class TextCellPresenter: VIPERCellPresenter {
+    
+    func present(table: VIPERTable, view: TextCellView, data: String) {
+        view.text = data
+    }
+}
+
 class TextCellViewBinding: UIView, VIPERCellView, AutoLayoutCellView {
     
     let viewImpl = TextCellViewImpl()
@@ -43,14 +50,6 @@ class TextCellViewBinding: UIView, VIPERCellView, AutoLayoutCellView {
         }
     }
 }
-
-class TextCellPresenter: VIPERCellPresenter {
-    
-    func present(table: VIPERTable, view: TextCellView, data: String) {
-        view.text = data
-    }
-}
-
 
 class TextCell: UITableViewCell, VIPERTableCellView {
     
