@@ -37,7 +37,7 @@ class MultiTypeData: VIPERTableDataSource, MixedType {
     }
 
     func table(table: VIPERTable, numberOfRowsInSection section: Int) -> Int {
-        return 50
+        return 100
     }
 }
 

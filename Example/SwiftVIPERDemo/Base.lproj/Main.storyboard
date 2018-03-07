@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oYD-SX-708">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zeg-hE-jNE">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,7 +10,25 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Single Type Table View Controller-->
+        <!--Tab Bar Controller-->
+        <scene sceneID="9vv-Iz-qWc">
+            <objects>
+                <tabBarController id="Zeg-hE-jNE" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="T2P-M9-9SZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="Xpg-ka-Bxn" kind="relationship" relationship="viewControllers" id="kjx-rF-jxl"/>
+                        <segue destination="oYD-SX-708" kind="relationship" relationship="viewControllers" id="ZIv-e1-5qF"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l9g-Bo-5Re" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1242" y="515"/>
+        </scene>
+        <!--Single Type List-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="SingleTypeTableViewController" customModule="SwiftVIPERDemo" customModuleProvider="target" sceneMemberID="viewController">
@@ -32,7 +50,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="PZx-dK-eI0"/>
+                    <navigationItem key="navigationItem" title="Single Type List" id="PZx-dK-eI0"/>
                     <connections>
                         <outletCollection property="bindings" destination="4wE-Gg-WHL" collectionClass="NSMutableArray" id="mtZ-KX-SCV"/>
                     </connections>
@@ -46,7 +64,7 @@
             </objects>
             <point key="canvasLocation" x="548" y="133.5832083958021"/>
         </scene>
-        <!--Multi Type Table View Controller-->
+        <!--Mixed Type List-->
         <scene sceneID="b6P-N4-vnf">
             <objects>
                 <viewController id="fnK-jU-JCw" customClass="MultiTypeTableViewController" customModule="SwiftVIPERDemo" customModuleProvider="target" sceneMemberID="viewController">
@@ -68,7 +86,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Mab-WT-w10"/>
                     </view>
-                    <navigationItem key="navigationItem" id="gtw-F1-xkt"/>
+                    <navigationItem key="navigationItem" title="Mixed Type List" id="gtw-F1-xkt"/>
                     <connections>
                         <outletCollection property="bindings" destination="HC8-Gy-W3m" collectionClass="NSMutableArray" id="8lP-O9-FxL"/>
                     </connections>
@@ -82,10 +100,11 @@
             </objects>
             <point key="canvasLocation" x="548" y="825.33733133433293"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Single Type-->
         <scene sceneID="EUr-xL-dj3">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Xpg-ka-Bxn" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Single Type" id="1XY-yh-LtT"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="fX2-F9-oDR">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -100,10 +119,11 @@
             </objects>
             <point key="canvasLocation" x="-310" y="134"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Mixed Type-->
         <scene sceneID="9xL-Lt-7yQ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oYD-SX-708" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Mixed Type" id="vTd-8J-yIA"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8cc-Mf-9Yj">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

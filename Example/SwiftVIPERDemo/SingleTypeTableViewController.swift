@@ -16,7 +16,7 @@ class StringData: VIPERTableDataSource, SingleType {
     }
 
     func table(table: VIPERTable, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 100
     }
 
     func present(table: VIPERTable, view: TextCell, at indexPath: IndexPath) {
