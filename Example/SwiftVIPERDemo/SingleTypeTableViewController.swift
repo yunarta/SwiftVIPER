@@ -11,7 +11,7 @@ import SwiftVIPER
 
 class StringData: VIPERTableDataSource, SingleType {
 
-    func creationInfo(table: VIPERTable) -> CellCreationInfo {
+    func cellInfo(table: VIPERTable) -> CellCreationInfo {
         return CellCreationInfo(id: 0, nib: "Text")
     }
 

@@ -25,7 +25,7 @@ class MultiTypeData: VIPERTableDataSource, MixedType {
         }
     }
     
-    func creationInfo(table: VIPERTable, at indexPath: IndexPath) -> CellCreationInfo {
+    func cellInfo(table: VIPERTable, at indexPath: IndexPath) -> CellCreationInfo {
         switch indexPath.row % 2 {
         case 0:
             return CellCreationInfo(id: 0, nib: "Text")

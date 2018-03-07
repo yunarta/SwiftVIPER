@@ -8,51 +8,52 @@
 import Foundation
 
 #if DEBUG
-    private let logVerbose = true
-    private let logEstimate = false && logVerbose
+    public struct Debug {
+        public let logEstimate: Bool
+        
+        public let logHit: Bool
+        public let logMiss: Bool
+        
+        internal func log(_ level: Level = .op, cache: CacheHit = .noop, _ message: String) {
+            switch level {
+            case .estimate:
+                guard logEstimate else {
+                    return
+                }
+                
+            default:
+                break
+            }
+            
+            switch cache {
+            case .hit:
+                guard logHit else {
+                    return
+                }
+                
+            case .miss:
+                guard logMiss else {
+                    return
+                }
+                
+            default:
+                break
+            }
+            
+            print(message)
+        }
+    }
     
-    private let logHit = false
-    private let logMiss = true
-    
-    private enum Level {
+    internal enum Level {
         case op
         case estimate
         case height
     }
     
-    private enum CacheHit {
+    internal enum CacheHit {
         case noop
         case hit
         case miss
-    }
-    
-    private func debug(_ level: Level = .op, cache: CacheHit = .noop, _ message: String) {
-        switch level {
-        case .estimate:
-            guard logEstimate else {
-                return
-            }
-            
-        default:
-            break
-        }
-        
-        switch cache {
-        case .hit:
-            guard logHit else {
-                return
-            }
-            
-        case .miss:
-            guard logMiss else {
-                return
-            }
-            
-        default:
-            break
-        }
-        
-        print(message)
     }
 #endif
 
@@ -60,7 +61,7 @@ protocol DataSourceHandler {
     
     var dataSource: VIPERTableDataSource? { get }
     
-    func creationInfo(table: VIPERTable, at indexPath: IndexPath) -> CellCreationInfo?
+    func cellInfo(table: VIPERTable, at indexPath: IndexPath) -> CellCreationInfo?
 }
 
 class SingleTypeHandler<S>: DataSourceHandler where S: VIPERTableDataSource & SingleType {
@@ -75,8 +76,8 @@ class SingleTypeHandler<S>: DataSourceHandler where S: VIPERTableDataSource & Si
         self.singleType = dataSource
     }
     
-    func creationInfo(table: VIPERTable, at indexPath: IndexPath) -> CellCreationInfo? {
-        return singleType?.creationInfo(table: table)
+    func cellInfo(table: VIPERTable, at indexPath: IndexPath) -> CellCreationInfo? {
+        return singleType?.cellInfo(table: table)
     }
 }
 
@@ -92,8 +93,8 @@ class MixedTypeHandler: DataSourceHandler {
         self.mixedType = dataSource
     }
     
-    func creationInfo(table: VIPERTable, at indexPath: IndexPath) -> CellCreationInfo? {
-        return mixedType?.creationInfo(table: table, at: indexPath)
+    func cellInfo(table: VIPERTable, at indexPath: IndexPath) -> CellCreationInfo? {
+        return mixedType?.cellInfo(table: table, at: indexPath)
     }
 }
 
@@ -144,6 +145,10 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
     
     let caches = VIPERTableCache()
     
+    #if DEBUG
+    var debug: Debug?
+    #endif
+    
     // MARK: - Init
     
     init(dataSource: DataSource, handler: DataSourceHandler, options: VIPERTableOptions) {
@@ -166,7 +171,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
     }
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let (id, nib) = handler.creationInfo(table: self, at: indexPath),
+        if let (id, nib) = handler.cellInfo(table: self, at: indexPath),
             let cell = tableView.dequeueReusableCell(withIdentifier: nib) {
             if let cell = cell as? VIPERTableCellViewBase {
                 let context = cell.context
@@ -190,6 +195,21 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
     }
     
     // MARK: - UITableViewDelegate
+    open func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        guard let cell = tableView.cellForRow(at: indexPath) as? VIPERTableCellViewBase else {
+            return nil
+        }
+        
+        if dataSource.cell(table: self, willSelect: cell) {
+           return indexPath
+        }
+        
+        return nil
+    }
+    
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
     
     open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
@@ -214,7 +234,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
                 if inUse.layoutMode == .autoLayout {
                     // for auto layout cell, we use the available height
                     #if DEBUG
-                    debug(.height, cache: .hit, "\(indexPath) calculate cache hit for 🅰️ layout, height = \(height)")
+                    debug?.log(.height, cache: .hit, "\(indexPath) calculate cache hit for 🅰️ layout, height = \(height)")
                     #endif
                     
                     return height
@@ -222,7 +242,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
                     // for manual layout cell, the content has not been changed, we use the available height
                     
                     #if DEBUG
-                    debug(.height, cache: .hit, "\(indexPath) calculate cache hit for Ⓜ️ layout, height = \(height)")
+                    debug?.log(.height, cache: .hit, "\(indexPath) calculate cache hit for Ⓜ️ layout, height = \(height)")
                     #endif
                     return height
                 }
@@ -239,7 +259,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
                 
                 calculatedHeight = layoutSize.height + separatorHeight
                 #if DEBUG
-                debug(.height, cache: .miss, "\(indexPath) calculate cache miss for 🅰️ layout, height = \(calculatedHeight)")
+                debug?.log(.height, cache: .miss, "\(indexPath) calculate cache miss for 🅰️ layout, height = \(calculatedHeight)")
                 #endif
                 
             case .manualLayout:
@@ -249,7 +269,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
                 
                 calculatedHeight = layoutSize.height + separatorHeight
                 #if DEBUG
-                debug(.height, cache: .miss, "\(indexPath) calculate cache miss for Ⓜ️ layout, height = \(calculatedHeight)")
+                debug?.log(.height, cache: .miss, "\(indexPath) calculate cache miss for Ⓜ️ layout, height = \(calculatedHeight)")
                 #endif
             }
             
@@ -271,7 +291,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
                     
                     calculatedHeight = layoutSize.height + separatorHeight
                     #if DEBUG
-                    debug(.height, cache: .miss, "\(indexPath) post-estimate cache miss for 🅰️ layout, height = \(calculatedHeight)")
+                    debug?.log(.height, cache: .miss, "\(indexPath) post-estimate cache miss for 🅰️ layout, height = \(calculatedHeight)")
                     #endif
                     
                 case .manualLayout:
@@ -281,7 +301,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
                     
                     calculatedHeight = layoutSize.height + separatorHeight
                     #if DEBUG
-                    debug(.height, cache: .miss, "\(indexPath) post-estimate cache miss for Ⓜ️ layout, height = \(calculatedHeight)")
+                    debug?.log(.height, cache: .miss, "\(indexPath) post-estimate cache miss for Ⓜ️ layout, height = \(calculatedHeight)")
                     #endif
                 }
                 
@@ -298,7 +318,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
             return UITableViewAutomaticDimension
         }
         
-        guard let (id, _) = handler.creationInfo(table: self, at: indexPath) else {
+        guard let (id, _) = handler.cellInfo(table: self, at: indexPath) else {
             return 0
         }
         
@@ -307,7 +327,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
         
         if let estimated = caches.estimatedHeights[id] {
             #if DEBUG
-            debug(.estimate, "\(indexPath) estimate cache hit, height = \(estimated)")
+            debug?.log(.estimate, "\(indexPath) estimate cache hit, height = \(estimated)")
             #endif
             return estimated
         }
@@ -324,7 +344,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
                 
                 calculatedHeight = layoutSize.height + separatorHeight
                 #if DEBUG
-                debug(.estimate, cache: .miss, "\(indexPath) estimate cache miss for 🅰️ layout, height = \(calculatedHeight)")
+                debug?.log(.estimate, cache: .miss, "\(indexPath) estimate cache miss for 🅰️ layout, height = \(calculatedHeight)")
                 #endif
                 
             case .manualLayout:
@@ -334,7 +354,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
                 
                 calculatedHeight = layoutSize.height + separatorHeight
                 #if DEBUG
-                debug(.estimate, cache: .miss, "\(indexPath) estimate cache miss for Ⓜ️ layout, height = \(calculatedHeight)")
+                debug?.log(.estimate, cache: .miss, "\(indexPath) estimate cache miss for Ⓜ️ layout, height = \(calculatedHeight)")
                 #endif
             }
             
@@ -346,7 +366,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
     }
     
     func retrieveCachedCell(_ tableView: UITableView, forRow indexPath: IndexPath) -> VIPERCellCache? {
-        guard let (id, nib) = handler.creationInfo(table: self, at: indexPath) else {
+        guard let (id, nib) = handler.cellInfo(table: self, at: indexPath) else {
             return nil
         }
         
