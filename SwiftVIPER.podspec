@@ -28,6 +28,14 @@ TODO: Add long description of the pod here.
     sp.source_files = 'SwiftVIPER/Classes/**/*'
   end
 
+s.subspec 'Field' do |sp|
+    sp.ios.deployment_target = '8.0'
+    sp.osx.deployment_target = '10.10'
+    
+    sp.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
+    sp.source_files = 'Contribs/Field/**/*'
+end
+
   s.subspec 'UIKit' do |sp|
     sp.ios.deployment_target = '8.0'
 

@@ -60,7 +60,7 @@
 		99F227E62046960000CDAE63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9BE33AD98E091C5AB09ED401 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		C5817243CEC9A8689708C943 /* Pods_SwiftVIPER_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftVIPER_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E77CE1803E0747B4C593AB39 /* SwiftVIPER.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SwiftVIPER.podspec; path = ../SwiftVIPER.podspec; sourceTree = "<group>"; };
+		E77CE1803E0747B4C593AB39 /* SwiftVIPER.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SwiftVIPER.podspec; path = ../SwiftVIPER.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		F4CAA0B7533283A2C0B91B78 /* Pods-SwiftVIPERDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVIPERDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVIPERDemo/Pods-SwiftVIPERDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 

@@ -2,6 +2,7 @@ use_frameworks!
 
 def shared
     pod 'SwiftVIPER', :path => '../'
+    pod 'SwiftVIPER/Field', :path => '../'
     pod 'SwiftVIPER/UIKitTable', :path => '../'
 end
 
