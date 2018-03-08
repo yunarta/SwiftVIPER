@@ -33,7 +33,6 @@ class MultiTypeData: VIPERTableDataSource, MixedType {
         default:
             return CellCreationInfo(id: 1, nib: "Manual")
         }
-        
     }
 
     func table(table: VIPERTable, numberOfRowsInSection section: Int) -> Int {

@@ -60,6 +60,12 @@ class MultilineTextCellViewBinding: UIView, VIPERCellView, ManualLayoutCellView 
             }
         }
     }
+    
+    func didSelect(table: VIPERTable) {
+        if let indexPath = indexPath {
+            print("indexPath = \(indexPath)")
+        }
+    }
 }
 
 class MultilineTextCell: UITableViewCell, VIPERTableCellView {

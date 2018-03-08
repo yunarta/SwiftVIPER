@@ -128,6 +128,8 @@ public struct VIPERTableOptions {
     
     var optimizeAutomaticRowHeight: Bool = false
     
+    var automaticDeselectRow: Bool = true
+    
     public init() {
         
     }
@@ -204,11 +206,26 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
            return indexPath
         }
         
-        return nil
+        cell.willSelect(table: self)
+        return indexPath
     }
     
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        defer {
+            if options.automaticDeselectRow {
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
+        }
         
+        guard let cell = tableView.cellForRow(at: indexPath) as? VIPERTableCellViewBase else {
+            return
+        }
+        
+        if dataSource.cell(table: self, didSelect: cell) {
+            return
+        }
+        
+        cell.didSelect(table: self)
     }
     
     open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -229,6 +246,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
         
         // get cell from in use caches
         if var inUse: VIPERTableCellViewBase = caches.inUse[indexKey] {
+            inUse.context.indexPath = indexPath
             // we are being called after cell acquisition
             if let height = caches.cachedHeights[indexKey] {
                 if inUse.layoutMode == .autoLayout {
@@ -279,6 +297,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
             // we are being called for content size and scroll estimation
             if let cached: VIPERCellCache = retrieveCachedCell(tableView, forRow: indexPath) {
                 var cell: VIPERTableCellViewBase = cached.cell
+                cell.context.indexPath = indexPath
                 
                 // populate cell with real data
                 dataSource.present(table: self, cell: cell, at: indexPath)

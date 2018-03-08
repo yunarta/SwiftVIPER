@@ -53,6 +53,8 @@ public protocol VIPERTableDataSource: class {
     func present(table: VIPERTable, cell: VIPERTableCellViewBase, at indexPath: IndexPath)
     
     func cell(table: VIPERTable, willSelect cell: VIPERTableCellViewBase) -> Bool
+    
+    func cell(table: VIPERTable, didSelect cell: VIPERTableCellViewBase) -> Bool
 }
 
 extension VIPERTableDataSource {
@@ -77,6 +79,8 @@ public protocol SingleType: class {
     func present(table: VIPERTable, view: CellView, at indexPath: IndexPath)
     
     func view(table: VIPERTable, willSelect view: CellView) -> Bool
+    
+    func view(table: VIPERTable, didSelect view: CellView) -> Bool
 }
 
 extension SingleType {
@@ -98,6 +102,18 @@ extension SingleType {
     public func view(table: VIPERTable, willSelect view: CellView) -> Bool {
         return false
     }
+    
+    public func cell(table: VIPERTable, didSelect cell: VIPERTableCellViewBase) -> Bool {
+        if let cell = cell as? CellView {
+            return self.view(table: table, willSelect: cell)
+        }
+        
+        return false
+    }
+    
+    public func view(table: VIPERTable, didSelect view: CellView) -> Bool {
+        return false
+    }
 }
 
 public protocol MixedType: class {
@@ -107,11 +123,17 @@ public protocol MixedType: class {
     func cellInfo(table: VIPERTable, at indexPath: IndexPath) -> CellCreationInfo
     
     func cell(table: VIPERTable, willSelect cell: VIPERTableCellViewBase) -> Bool
+    
+    func cell(table: VIPERTable, didSelect cell: VIPERTableCellViewBase) -> Bool
 }
 
 extension MixedType {
     
     public func cell(table: VIPERTable, willSelect cell: VIPERTableCellViewBase) -> Bool {
+        return false
+    }
+    
+    public func cell(table: VIPERTable, didSelect cell: VIPERTableCellViewBase) -> Bool {
         return false
     }
 }

@@ -7,9 +7,34 @@
 
 import Foundation
 
+class VIPERCellViewContext {
+    
+    weak var cell: (UITableViewCell & VIPERTableCellViewBase)?
+    
+    weak var viewContext: VIPERViewContext?
+    
+    var tableFrameSize: CGSize = CGSize.zero
+    
+    var indexPath: IndexPath?
+}
+
+extension VIPERCellViewBase {
+    
+    var context: VIPERCellViewContext {
+        if let context = objc_getAssociatedObject(self, &keyVIPERTableCellContext) as? VIPERCellViewContext {
+            return context
+        }
+        
+        let context = VIPERCellViewContext()
+        objc_setAssociatedObject(self, &keyVIPERTableCellContext, context, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        
+        return context
+    }
+}
+
 /** Internal side of VIPER Table CellView, used for storing data used internally by VIPERTable Data
  */
-class VIPERCellViewContext {
+class VIPERTableCellViewContext {
     
     var isNeedConfiguration = true
     
@@ -35,12 +60,12 @@ extension VIPERTableCellViewBase {
         }
     }
     
-    var context: VIPERCellViewContext {
-        if let context = objc_getAssociatedObject(self, &keyVIPERTableCellContext) as? VIPERCellViewContext {
+    var context: VIPERTableCellViewContext {
+        if let context = objc_getAssociatedObject(self, &keyVIPERTableCellContext) as? VIPERTableCellViewContext {
             return context
         }
         
-        let context = VIPERCellViewContext()
+        let context = VIPERTableCellViewContext()
         objc_setAssociatedObject(self, &keyVIPERTableCellContext, context, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         
         return context

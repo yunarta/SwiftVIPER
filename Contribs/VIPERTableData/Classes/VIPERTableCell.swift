@@ -8,6 +8,7 @@ import UIKit
 var keyVIPERCellViewCell = "keyVIPERCellViewCell"
 var keyVIPERCellViewContext = "keyVIPERCellViewContext"
 var keyVIPERCellViewTableFrameSize = "keyVIPERCellViewTableFrameSize"
+var keyVIPERCellViewIndexPath = "keyVIPERCellViewTableIndexPath"
 
 // MARK: - VIPER View
 
@@ -18,6 +19,10 @@ public protocol VIPERCellViewBase: class {
     func estimateLayoutSize(fit: CGSize) -> CGSize
     
     func computeLayoutSize(fit: CGSize) -> CGSize
+    
+    func willSelect(table: VIPERTable)
+    
+    func didSelect(table: VIPERTable)
 }
 
 public protocol AutoLayoutCellView {
@@ -29,35 +34,54 @@ public protocol ManualLayoutCellView {
 }
 
 extension VIPERCellViewBase {
-
-    public var cell: UITableViewCell? {
-        get {
-            return objc_getAssociatedObject(self, &keyVIPERCellViewCell) as? UITableViewCell
-        }
-
-        set(value) {
-            objc_setAssociatedObject(self, &keyVIPERCellViewCell, value, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
-        }
-    }
-
+    
     public var viewContext: VIPERViewContext? {
         get {
-            return objc_getAssociatedObject(self, &keyVIPERCellViewContext) as? VIPERViewContext
-        }
-
-        set(value) {
-            objc_setAssociatedObject(self, &keyVIPERCellViewContext, value, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
-        }
-    }
-    
-    public internal (set) var tableFrameSize: CGSize {
-        get {
-            return (objc_getAssociatedObject(self, &keyVIPERCellViewTableFrameSize) as? CGSize) ?? CGSize.zero
+            return context.viewContext
         }
         
         set(value) {
-            objc_setAssociatedObject(self, &keyVIPERCellViewTableFrameSize, value, objc_AssociationPolicy.OBJC_ASSOCIATION_COPY)
+            context.viewContext = value
         }
+    }
+    
+    public internal (set) var cell: (UITableViewCell & VIPERTableCellViewBase)? {
+        get {
+            return context.cell
+        }
+
+        set(value) {
+            context.cell = value
+        }
+    }
+
+    
+    public internal (set) var tableFrameSize: CGSize {
+        get {
+            return context.tableFrameSize
+        }
+        
+        set(value) {
+            context.tableFrameSize = value
+        }
+    }
+  
+    public internal (set) var indexPath: IndexPath? {
+        get {
+            return context.indexPath
+        }
+        
+        set(value) {
+            context.indexPath = value
+        }
+    }
+    
+    public func willSelect(table: VIPERTable) {
+        
+    }
+    
+    public func didSelect(table: VIPERTable) {
+        
     }
 }
 
@@ -120,6 +144,14 @@ public protocol VIPERTableCellViewBase {
     var backgroundView: UIView? { get set }
 
     var selectedBackgroundView: UIView? { get set }
+    
+    func willSelect(table: VIPERTable)
+    
+    func didSelect(table: VIPERTable)
+}
+
+extension VIPERTableCellViewBase {
+    
 }
 
 /** VIPER TableCellView class used conform UITableViewCell into VIPER UIKitTable
@@ -180,13 +212,30 @@ extension VIPERTableCellView where Self: UITableViewCell {
             return
         }
         
-        cellView.cell = self
+        cellView.context.cell = self
+        cellView.context.indexPath = context.indexPath
         cellView.viewContext = context.viewContext
         
         assert(cellView.view is PresenterView)
         if let cell = cellView.view as? PresenterView {
             presenter.present(table: table, view: cell, data: data)
         }
+    }
+    
+    public func willSelect(table: VIPERTable) {
+        cellView.context.cell = self
+        cellView.context.indexPath = context.indexPath
+        cellView.viewContext = context.viewContext
+        
+        cellView.willSelect(table: table)
+    }
+    
+    public func didSelect(table: VIPERTable) {
+        cellView.context.cell = self
+        cellView.context.indexPath = context.indexPath
+        cellView.viewContext = context.viewContext
+        
+        cellView.didSelect(table: table)
     }
 }
 
