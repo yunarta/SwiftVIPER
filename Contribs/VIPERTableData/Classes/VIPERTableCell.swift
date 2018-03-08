@@ -5,13 +5,6 @@
 
 import UIKit
 
-var keyVIPERCellViewCell = "keyVIPERCellViewCell"
-var keyVIPERCellViewContext = "keyVIPERCellViewContext"
-var keyVIPERCellViewTableFrameSize = "keyVIPERCellViewTableFrameSize"
-var keyVIPERCellViewIndexPath = "keyVIPERCellViewTableIndexPath"
-
-// MARK: - VIPER View
-
 /** The VIPER View class in VIPERUIKitTable
  */
 public protocol VIPERCellViewBase: class {
@@ -25,17 +18,26 @@ public protocol VIPERCellViewBase: class {
     func didSelect(table: VIPERTable)
 }
 
-public protocol AutoLayoutCellView {
-    
-}
-
-public protocol ManualLayoutCellView {
-    
-}
-
+/** Default function implementation for VIPERCellViewBase
+ */
 extension VIPERCellViewBase {
     
-    public var viewContext: VIPERViewContext? {
+    public func willSelect(table: VIPERTable) {
+        
+    }
+    
+    public func didSelect(table: VIPERTable) {
+        
+    }
+}
+
+/** Accessible properties for VIPERCellViewBase
+ */
+extension VIPERCellViewBase {
+    
+    /** VIPERViewContext where you can retrieve the controller hosting this cell
+     */
+    public internal (set) var viewContext: VIPERViewContext? {
         get {
             return context.viewContext
         }
@@ -45,17 +47,20 @@ extension VIPERCellViewBase {
         }
     }
     
+    /** UIKit UITableViewCell instance
+     */
     public internal (set) var cell: (UITableViewCell & VIPERTableCellViewBase)? {
         get {
             return context.cell
         }
-
+        
         set(value) {
             context.cell = value
         }
     }
-
     
+    /** The table frame size that can be used for fine tuning calculation
+     */
     public internal (set) var tableFrameSize: CGSize {
         get {
             return context.tableFrameSize
@@ -65,7 +70,10 @@ extension VIPERCellViewBase {
             context.tableFrameSize = value
         }
     }
-  
+    
+    /** Current cell index path.
+        It will be nil when the cell is a estimate purpose cell
+     */
     public internal (set) var indexPath: IndexPath? {
         get {
             return context.indexPath
@@ -75,14 +83,13 @@ extension VIPERCellViewBase {
             context.indexPath = value
         }
     }
+}
+
+/** Companion class of VIPER CellView for auto layout cell view
+    Conforming to AutoLayoutCellView will gives you default estimateLayoutSize and computeLayoutSize implementation.
+ */
+public protocol AutoLayoutCellView {
     
-    public func willSelect(table: VIPERTable) {
-        
-    }
-    
-    public func didSelect(table: VIPERTable) {
-        
-    }
 }
 
 extension VIPERCellViewBase where Self: AutoLayoutCellView {
@@ -96,26 +103,15 @@ extension VIPERCellViewBase where Self: AutoLayoutCellView {
     }
 }
 
-public protocol VIPERCellView: VIPERCellViewBase {
-    
-    associatedtype View
-    
-    var view: View { get }
-}
-
-// MARK: - VIPER Presenter
-
-/** The VIPER Presenter class in VIPERUIKitTable
+/** Companion class of VIPER CellView for manual layout cell view
+    Conforming to AutoLayoutCellView will gives you default estimateLayoutSize and computeLayoutSize implementation.
  */
-public protocol VIPERCellPresenter: class {
-
-    associatedtype View
-
-    associatedtype Data
+public protocol ManualLayoutCellView {
     
-    func present(table: VIPERTable, view: View, data: Data)
 }
 
+/** Layout mode of the table cell view
+ */
 public enum VIPERTableCellViewLayoutMode: Int {
     
     case autoLayout
@@ -127,7 +123,6 @@ public enum VIPERTableCellViewLayoutMode: Int {
 public protocol VIPERTableCellViewBase {
     
     // MARK: - VIPERTableCellViewBase - layout
-    
     var layoutMode: VIPERTableCellViewLayoutMode { get }
     
     /** Used by auto layout to determined the height, it will use contentView if its nil
@@ -138,34 +133,31 @@ public protocol VIPERTableCellViewBase {
     
     func computeLayoutSize(fit: CGSize) -> CGSize
     
-    // MARK: - UITableViewCell
-    var contentView: UIView { get }
-
-    var backgroundView: UIView? { get set }
-
-    var selectedBackgroundView: UIView? { get set }
-    
+    // MARK: - VIPERTableCellViewBase - internally used
     func willSelect(table: VIPERTable)
     
     func didSelect(table: VIPERTable)
-}
-
-extension VIPERTableCellViewBase {
     
+    // MARK: - UITableViewCell
+    var contentView: UIView { get }
+    
+    var backgroundView: UIView? { get set }
+    
+    var selectedBackgroundView: UIView? { get set }
 }
 
 /** VIPER TableCellView class used conform UITableViewCell into VIPER UIKitTable
  */
 public protocol VIPERTableCellView: VIPERTableCellViewBase {
-
+    
     associatedtype Presenter: VIPERCellPresenter
-
+    
     associatedtype CellView: VIPERCellView
     
     typealias PresenterView = Presenter.View
     
     var presenter: Presenter? { get set }
-
+    
     var cellView: CellView { get }
     
     func estimateLayoutSize(fit: CGSize) -> CGSize
@@ -175,38 +167,8 @@ public protocol VIPERTableCellView: VIPERTableCellViewBase {
 
 /** Internal side of VIPER Table CellView, used for delegating layout and presenter method used internally by VIPERTable Data
  */
-extension VIPERTableCellView where Self: UITableViewCell, CellView: AutoLayoutCellView {
-    
-    public var layoutMode: VIPERTableCellViewLayoutMode {
-        return .autoLayout
-    }
-    
-    public func estimateLayoutSize(fit: CGSize) -> CGSize {
-        return CGSize.zero
-    }
-    
-    public func computeLayoutSize(fit: CGSize) -> CGSize {
-        return CGSize.zero
-    }
-}
-
-extension VIPERTableCellView where Self: UITableViewCell, CellView: ManualLayoutCellView {
-    
-    public var layoutMode: VIPERTableCellViewLayoutMode {
-        return .manualLayout
-    }
-    
-    public func estimateLayoutSize(fit: CGSize) -> CGSize {
-        return cellView.estimateLayoutSize(fit: fit)
-    }
-    
-    public func computeLayoutSize(fit: CGSize) -> CGSize {
-        return cellView.estimateLayoutSize(fit: fit)
-    }
-}
-
 extension VIPERTableCellView where Self: UITableViewCell {
-     
+    
     public func present(table: VIPERTable, data: Presenter.Data) {
         guard let presenter = self.presenter else {
             return
@@ -238,4 +200,59 @@ extension VIPERTableCellView where Self: UITableViewCell {
         cellView.didSelect(table: table)
     }
 }
+
+extension VIPERTableCellView where Self: UITableViewCell, CellView: AutoLayoutCellView {
+    
+    public var layoutMode: VIPERTableCellViewLayoutMode {
+        return .autoLayout
+    }
+    
+    public func estimateLayoutSize(fit: CGSize) -> CGSize {
+        return CGSize.zero
+    }
+    
+    public func computeLayoutSize(fit: CGSize) -> CGSize {
+        return CGSize.zero
+    }
+}
+
+extension VIPERTableCellView where Self: UITableViewCell, CellView: ManualLayoutCellView {
+    
+    public var layoutMode: VIPERTableCellViewLayoutMode {
+        return .manualLayout
+    }
+    
+    public func estimateLayoutSize(fit: CGSize) -> CGSize {
+        return cellView.estimateLayoutSize(fit: fit)
+    }
+    
+    public func computeLayoutSize(fit: CGSize) -> CGSize {
+        return cellView.estimateLayoutSize(fit: fit)
+    }
+}
+
+// MARK: - VIPER View
+
+/** The VIPER View class in VIPERUIKitTable
+ */
+public protocol VIPERCellView: VIPERCellViewBase {
+    
+    associatedtype View
+    
+    var view: View { get }
+}
+
+// MARK: - VIPER Presenter
+
+/** The VIPER Presenter class in VIPERUIKitTable
+ */
+public protocol VIPERCellPresenter: class {
+
+    associatedtype View
+
+    associatedtype Data
+    
+    func present(table: VIPERTable, view: View, data: Data)
+}
+
 

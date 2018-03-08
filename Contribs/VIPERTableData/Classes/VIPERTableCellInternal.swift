@@ -7,6 +7,11 @@
 
 import Foundation
 
+/** Internal side of VIPER CellView, used for storing data used internally
+ */
+
+private var keyVIPERCellViewContext = "keyVIPERCellViewContext"
+
 class VIPERCellViewContext {
     
     weak var cell: (UITableViewCell & VIPERTableCellViewBase)?
@@ -21,12 +26,12 @@ class VIPERCellViewContext {
 extension VIPERCellViewBase {
     
     var context: VIPERCellViewContext {
-        if let context = objc_getAssociatedObject(self, &keyVIPERTableCellContext) as? VIPERCellViewContext {
+        if let context = objc_getAssociatedObject(self, &keyVIPERCellViewContext) as? VIPERCellViewContext {
             return context
         }
         
         let context = VIPERCellViewContext()
-        objc_setAssociatedObject(self, &keyVIPERTableCellContext, context, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        objc_setAssociatedObject(self, &keyVIPERCellViewContext, context, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         
         return context
     }
@@ -38,27 +43,19 @@ class VIPERTableCellViewContext {
     
     var isNeedConfiguration = true
     
-    public internal (set) weak var viewContext: VIPERViewContext?
+    weak var viewContext: VIPERViewContext?
     
-    public internal (set) weak var router: VIPERRouter?
+    weak var router: VIPERRouter?
     
-    public internal (set) var indexPath: IndexPath = IndexPath()
+    var indexPath: IndexPath = IndexPath()
+    
+    var isContentChanged: Bool = true
 }
 
-var keyVIPERTableCellViewBaseLayoutRequired = "keyVIPERTableCellViewBaseLayoutRequired"
-var keyVIPERTableCellContext = "keyVIPERTableCellContext"
+private var keyVIPERTableCellViewBaseLayoutRequired = "keyVIPERTableCellViewBaseLayoutRequired"
+private var keyVIPERTableCellContext = "keyVIPERTableCellContext"
 
 extension VIPERTableCellViewBase {
-    
-    var isContentChanged: Bool {
-        get {
-            return (objc_getAssociatedObject(self, &keyVIPERTableCellViewBaseLayoutRequired) as? Bool) ?? true
-        }
-        
-        set(value) {
-            objc_setAssociatedObject(self, &keyVIPERTableCellViewBaseLayoutRequired, value, objc_AssociationPolicy.OBJC_ASSOCIATION_COPY)
-        }
-    }
     
     var context: VIPERTableCellViewContext {
         if let context = objc_getAssociatedObject(self, &keyVIPERTableCellContext) as? VIPERTableCellViewContext {

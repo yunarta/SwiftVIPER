@@ -5,15 +5,15 @@
 
 import UIKit
 
+private var keyVIPERTableRouter = "keyVIPERTableRouter"
+private var keyVIPERTableViewContent = "keyVIPERTableViewContent"
+
 public typealias CellCreationInfo = (id: Int, nib: String)
 
 public protocol VIPERTable: class {
 
     func install(to table: UITableView)
 }
-
-private var keyVIPERTableRouter = "keyVIPERTableRouter"
-private var keyVIPERTableViewContent = "keyVIPERTableViewContent"
 
 extension VIPERTable {
     

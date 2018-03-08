@@ -7,9 +7,6 @@
 
 import Foundation
 
-var keyVIPERTableDataSourceRouter = "keyVIPERTableDataSourceRouter"
-var keyVIPERTableDataSourceViewContext = "keyVIPERTableDataSourceViewContext"
-
 // MARK: Extension to access VIPER
 extension VIPERTable {
     
@@ -19,6 +16,3 @@ extension VIPERTable {
     }
 }
 
-extension VIPERTableDataSource {
-    
-}

@@ -245,7 +245,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
         let separatorHeight: CGFloat = tableView.separatorStyle == .none ? 0.0 : 1.0
         
         // get cell from in use caches
-        if var inUse: VIPERTableCellViewBase = caches.inUse[indexKey] {
+        if let inUse: VIPERTableCellViewBase = caches.inUse[indexKey] {
             inUse.context.indexPath = indexPath
             // we are being called after cell acquisition
             if let height = caches.cachedHeights[indexKey] {
@@ -256,7 +256,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
                     #endif
                     
                     return height
-                } else if inUse.isContentChanged == false {
+                } else if inUse.context.isContentChanged == false {
                     // for manual layout cell, the content has not been changed, we use the available height
                     
                     #if DEBUG
@@ -283,7 +283,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
             case .manualLayout:
                 // for manual cell, we will recalculate the height if the content has changed
                 let layoutSize: CGSize = inUse.computeLayoutSize(fit: tableView.frame.size)
-                inUse.isContentChanged = false
+                inUse.context.isContentChanged = false
                 
                 calculatedHeight = layoutSize.height + separatorHeight
                 #if DEBUG
@@ -296,7 +296,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
         } else {
             // we are being called for content size and scroll estimation
             if let cached: VIPERCellCache = retrieveCachedCell(tableView, forRow: indexPath) {
-                var cell: VIPERTableCellViewBase = cached.cell
+                let cell: VIPERTableCellViewBase = cached.cell
                 cell.context.indexPath = indexPath
                 
                 // populate cell with real data
@@ -316,7 +316,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
                 case .manualLayout:
                     // for manual cell, we will recalculate the height if the content has changed
                     let layoutSize: CGSize = cell.estimateLayoutSize(fit: tableView.frame.size) 
-                    cell.isContentChanged = false
+                    cell.context.isContentChanged = false
                     
                     calculatedHeight = layoutSize.height + separatorHeight
                     #if DEBUG
@@ -353,7 +353,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
         
         // we are being called for content size and scroll estimation
         if let cached: VIPERCellCache = retrieveCachedCell(tableView, forRow: indexPath) {
-            var cell: VIPERTableCellViewBase = cached.cell
+            let cell: VIPERTableCellViewBase = cached.cell
             
             let calculatedHeight: CGFloat
             switch cell.layoutMode {
@@ -369,7 +369,7 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
             case .manualLayout:
                 // for manual cell, we will recalculate the height if the content has changed
                 let layoutSize: CGSize = cell.estimateLayoutSize(fit: tableView.frame.size)
-                cell.isContentChanged = false
+                cell.context.isContentChanged = false
                 
                 calculatedHeight = layoutSize.height + separatorHeight
                 #if DEBUG
