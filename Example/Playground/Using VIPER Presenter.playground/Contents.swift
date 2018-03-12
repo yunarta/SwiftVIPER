@@ -2,79 +2,51 @@
 
 import PlaygroundSupport
 import SwiftVIPER
+import RxSwift
 import UIKit
 
-//: Defining view interface protocol allow you to change implementation of the view later
-protocol MyViewInterface: class {
-    
-    var state: (String, Int) { get set }
-}
+struct Data {
 
-//: Actual implementation of the view interface
-class MyView: MyViewInterface, VIPERViewInterface {
+    var text: String
     
-    let observableState = VIPERField<(String, Int)>(("A", 0))
-    var state: (String, Int) {
-        get {
-            return observableState.value
-        }
-        
-        set {
-            observableState.value = newValue
-        }
-    }
+    var value: Int
 }
 
 //: View binding is the "V" in VIPER, where all the view related function are executed here
 class MyViewBinding: VIPERViewBinding, VIPERViewBindingInterface {
-    
+
     weak var button: UIButton? {
         didSet {
             button?.addTarget(self, action: #selector(MyViewBinding.update), for: UIControlEvents.touchUpInside)
         }
     }
     
-    weak var label: UILabel? {
-        didSet {
-            view.observableState.onChange { [weak self] (prefix, number) in
-                self?.label?.text = "\(prefix) \(number)"
-            }
-        }
-    }
+    weak var label: UILabel?
     
-    var view = MyView()
+    var presenter: CountingPresenter?
     
-    @objc required init() {
-        super.init(view: view)
+    var disposable: Disposable?
+    
+    @objc required override init() {
+        super.init()
     }
     
     @objc func update() {
-        let number = view.state.1 + 1
-        view.state = (view.state.0, number)
+        disposable?.dispose()
+        disposable = presenter?.timer.subscribe(onNext: { [weak self] data in
+            self?.label?.text = "\(data.text) \(data.value)"
+        })
     }
 }
 
 //: The presenter starts here
 class CountingPresenter: VIPERPresenter {
     
-    weak var view: MyViewInterface?
-    
-    var timer: Timer?
-    
-    var counter = 0
-    
-    init(_ view: MyViewInterface) {
-        self.view = view
-    }
-    
-    func start() {
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
-            guard let me = self else {
-                return
-            }
-            
-            me.view?.state = ("C", me.counter)
-            me.counter += 1
+    let timer: Observable<Data>
+        
+    init() {
+        timer = Observable<Int>.timer(0, period: 1, scheduler: ConcurrentMainScheduler.instance).map { value in
+            return Data(text: "C", value: value)
         }
     }
 }
@@ -86,6 +58,8 @@ class MyController: UIViewController {
     
     override func loadView() {
         super.loadView()
+        
+        binding.presenter = CountingPresenter()
         
         let view = UIView()
         view.backgroundColor = .white
@@ -112,13 +86,7 @@ class MyController: UIViewController {
 
     override func viewDidLoad() {
         navigationItem.title = "Root"
-        presenters.set(name: "counter", CountingPresenter(binding.view))
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        if let presenter = presenters.get(name: "counter") as? CountingPresenter {
-            presenter.start()
-        }
+        dispatchViewDidLoad()
     }
 }
 

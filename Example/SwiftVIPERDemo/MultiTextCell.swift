@@ -7,32 +7,18 @@
 //
 
 import Foundation
-
+import RxSwift
 import SwiftVIPER
-
-protocol MultilineTextCellView: VIPERViewInterface {
-    
-    var text: String { get set }
-}
-
-class MultilineTextCellViewImpl: MultilineTextCellView {
-    
-    let observableText = VIPERField<String>("default")
-    var text: String {
-        get {
-            return observableText.value
-        }
-        
-        set {
-            observableText.value = newValue
-        }
-    }
-}
 
 class MultilineTextCellPresenter: VIPERCellPresenter {
     
-    func present(table: VIPERTable, view: MultilineTextCellView, data: String) {
-        view.text = data
+    let observableText = Variable<String>("default")
+    var text: Observable<String> {
+        return observableText.asObservable()
+    }
+    
+    func present(table: VIPERTable, data: String) {
+        observableText.value = "abc \(data)"
     }
 }
 
@@ -47,19 +33,21 @@ class MultilineTextCellViewBinding: UIView, VIPERCellView, ManualLayoutCellView 
         return CGSize(width: fit.width, height: fit.height / 10)
     }
     
-    
-    let viewImpl = MultilineTextCellViewImpl()
-    var view: MultilineTextCellView {
-        return viewImpl
-    }
-    
-    @IBOutlet weak var label: UILabel! {
+    weak var presenter: MultilineTextCellPresenter? {
         didSet {
-            viewImpl.observableText.onChange { [weak self] value in
-                self?.label.text = "abc \(value)"
+            guard let presenter = presenter else {
+                return
             }
+            
+            disposeBag.insert(presenter.text.subscribe(onNext: { [weak self] value in
+                self?.label?.text = value
+            }))
         }
     }
+    
+    var disposeBag = DisposeBag()
+    
+    @IBOutlet weak var label: UILabel?
     
     func didSelect(table: VIPERTable) {
         if let indexPath = indexPath {
@@ -80,5 +68,9 @@ class MultilineTextCell: UITableViewCell, VIPERTableCellView {
         return binding
     }
     
-    @IBOutlet weak var binding: MultilineTextCellViewBinding!
+    @IBOutlet weak var binding: MultilineTextCellViewBinding! {
+        didSet {
+            binding.presenter = presenter
+        }
+    }
 }

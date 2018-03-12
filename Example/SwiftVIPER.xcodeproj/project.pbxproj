@@ -50,6 +50,7 @@
 		99696D71203E9E7A0035A8F7 /* Routing Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Routing Playground.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		997B5DE72040072700A7684A /* Why VIPER View.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Why VIPER View.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		997B5DE820400D3900A7684A /* Using VIPER Presenter.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Using VIPER Presenter.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9997B41A20569A4100306CF9 /* Testing VIPER View.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Testing VIPER View.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		99F0CA8F20401455009E9534 /* Testing VIPER Presenter.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Testing VIPER Presenter.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		99F227D82046960000CDAE63 /* SwiftVIPERDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftVIPERDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99F227DA2046960000CDAE63 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -173,6 +174,7 @@
 				997B5DE72040072700A7684A /* Why VIPER View.playground */,
 				997B5DE820400D3900A7684A /* Using VIPER Presenter.playground */,
 				99F0CA8F20401455009E9534 /* Testing VIPER Presenter.playground */,
+				9997B41A20569A4100306CF9 /* Testing VIPER View.playground */,
 				99696D69203E9E070035A8F7 /* Playground.h */,
 				99696D6A203E9E070035A8F7 /* Info.plist */,
 				99696D6F203E9E230035A8F7 /* Playground.swift */,
@@ -363,10 +365,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVIPERDemo/Pods-SwiftVIPERDemo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftVIPER/SwiftVIPER.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftVIPER.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

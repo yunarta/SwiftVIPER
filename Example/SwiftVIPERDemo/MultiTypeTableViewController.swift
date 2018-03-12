@@ -40,20 +40,16 @@ class MultiTypeData: VIPERTableDataSource, MixedType {
     }
 }
 
-class MultiTypeTableView: VIPERViewInterface {
-    
-}
 
 class MultiTypeTableViewBinding: VIPERTableViewBinding, VIPERViewBindingInterface {
     
     let tableData = VIPERTableData<MultiTypeData>(dataSource: MultiTypeData())
     
-    var view = TextTableView()
     
     @IBOutlet weak var tableView: UITableView?
     
     required init() {
-        super.init(view: view, tableData: tableData)
+        super.init(tableData: tableData)
     }
     
     override func viewDidLoad() {

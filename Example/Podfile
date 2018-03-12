@@ -8,6 +8,8 @@ end
 
 target 'SwiftVIPERDemo' do
     platform :ios, '8.0'
+    
+    pod 'RxSwift'
     shared
 end
 
@@ -18,5 +20,8 @@ end
 
 target 'Playground' do
     platform :ios, '8.0'
+    
+    pod 'RxSwift'
+    pod 'RxBlocking'
     shared
 end

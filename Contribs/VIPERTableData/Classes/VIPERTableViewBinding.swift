@@ -10,9 +10,9 @@ open class VIPERTableViewBinding: VIPERViewBinding {
     
     weak var internalTableData: VIPERTable?
 
-    public init(view: VIPERViewInterface, tableData: VIPERTable) {
+    public init(tableData: VIPERTable) {
         self.internalTableData = tableData
-        super.init(view: view)
+        super.init()
     }
 
     open override func viewDidLoad() {

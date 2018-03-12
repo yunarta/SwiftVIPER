@@ -24,20 +24,15 @@ class StringData: VIPERTableDataSource, SingleType {
     }
 }
 
-class TextTableView: VIPERViewInterface {
-    
-}
 
 class TextTableViewBinding: VIPERTableViewBinding, VIPERViewBindingInterface {
     
     let tableData = VIPERTableData<StringData>(dataSource: StringData())
     
-    var view = TextTableView()
-    
     @IBOutlet weak var tableView: UITableView?
     
     required init() {
-        super.init(view: view, tableData: tableData)
+        super.init(tableData: tableData)
     }
     
     override func viewDidLoad() {

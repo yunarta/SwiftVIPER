@@ -5,44 +5,33 @@ Assuming the view test in the user interface test behave as expected.
 */
 
 import PlaygroundSupport
+import RxBlocking
+import RxSwift
 import SwiftVIPER
 import UIKit
 
-//: Defining view interface protocol allow you to change implementation of the view later
-protocol MyViewInterface: class {
+struct Data {
     
-    var state: (String, Int) { get set }
-}
-
-//: Actual implementation of the view interface
-class MyView: MyViewInterface, VIPERViewInterface {
+    var text: String
     
-    var state: (String, Int) = ("", 0)
+    var value: Int
 }
 
 //: The presenter starts here
 class CountingPresenter: VIPERPresenter {
     
-    weak var view: MyViewInterface?
+    let timer: Observable<Data>
     
-    var timer: Timer?
-    
-    var counter = 0
-    
-    init(_ view: MyViewInterface) {
-        self.view = view
-    }
-    
-    func update() {
-        view?.state = ("C", counter)
-        counter += 1
+    init() {
+        timer = Observable<Int>.timer(0, period: 1, scheduler: ConcurrentMainScheduler.instance).map { value in
+            return Data(text: "C", value: value)
+        }
     }
 }
 
-let view = MyView()
+let presenter = CountingPresenter()
 
-let presenter = CountingPresenter(view)
-presenter.update()
-
-assert(view.state.0 == "C")
-assert(view.state.1 == 0)
+if let data = try presenter.timer.toBlocking(timeout: 10).first() {
+    assert(data.text == "C")
+    assert(data.value == 0)
+}

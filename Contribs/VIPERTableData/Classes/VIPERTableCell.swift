@@ -154,8 +154,6 @@ public protocol VIPERTableCellView: VIPERTableCellViewBase {
     
     associatedtype CellView: VIPERCellView
     
-    typealias PresenterView = Presenter.View
-    
     var presenter: Presenter? { get set }
     
     var cellView: CellView { get }
@@ -178,10 +176,7 @@ extension VIPERTableCellView where Self: UITableViewCell {
         cellView.context.indexPath = context.indexPath
         cellView.viewContext = context.viewContext
         
-        assert(cellView.view is PresenterView)
-        if let cell = cellView.view as? PresenterView {
-            presenter.present(table: table, view: cell, data: data)
-        }
+        presenter.present(table: table, data: data)
     }
     
     public func willSelect(table: VIPERTable) {
@@ -237,9 +232,6 @@ extension VIPERTableCellView where Self: UITableViewCell, CellView: ManualLayout
  */
 public protocol VIPERCellView: VIPERCellViewBase {
     
-    associatedtype View
-    
-    var view: View { get }
 }
 
 // MARK: - VIPER Presenter
@@ -248,11 +240,9 @@ public protocol VIPERCellView: VIPERCellViewBase {
  */
 public protocol VIPERCellPresenter: class {
 
-    associatedtype View
-
     associatedtype Data
     
-    func present(table: VIPERTable, view: View, data: Data)
+    func present(table: VIPERTable, data: Data)
 }
 
 

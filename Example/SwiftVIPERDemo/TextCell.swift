@@ -7,48 +7,45 @@
 //
 
 import Foundation
+import RxSwift
 import SwiftVIPER
 
-protocol TextCellView: VIPERViewInterface {
+class TextCellView {
     
-    var text: String { get set }
-}
-
-class TextCellViewImpl: TextCellView {
     
-    let observableText = VIPERField<String>("default")
-    var text: String {
-        get {
-            return observableText.value
-        }
-        
-        set {
-            observableText.value = newValue
-        }
-    }
 }
 
 class TextCellPresenter: VIPERCellPresenter {
     
-    func present(table: VIPERTable, view: TextCellView, data: String) {
-        view.text = data
+    let observableText = Variable<String>("default")
+    var text: Observable<String> {
+        return observableText.asObservable()
+    }
+    
+    func present(table: VIPERTable, data: String) {
+        observableText.value = "abc \(data)"
     }
 }
 
 class TextCellViewBinding: UIView, VIPERCellView, AutoLayoutCellView {
     
-    let viewImpl = TextCellViewImpl()
-    var view: TextCellView {
-        return viewImpl
-    }
+    let view = TextCellView()
     
-    @IBOutlet weak var label: UILabel! {
+    var presenter: TextCellPresenter? {
         didSet {
-            viewImpl.observableText.onChange { [weak self] value in               
-                self?.label.text = "abc \(value)"
+            guard let presenter = presenter else {
+                return
             }
+            
+            disposeBag.insert(presenter.text.subscribe(onNext: { [weak self] value in
+                self?.label?.text = value
+            }))
         }
     }
+    
+    var disposeBag = DisposeBag()
+    
+    @IBOutlet weak var label: UILabel?
 }
 
 class TextCell: UITableViewCell, VIPERTableCellView {
@@ -63,5 +60,9 @@ class TextCell: UITableViewCell, VIPERTableCellView {
         return binding
     }
     
-    @IBOutlet weak var binding: TextCellViewBinding!
+    @IBOutlet weak var binding: TextCellViewBinding! {
+        didSet {
+            cellView.presenter = presenter
+        }
+    }
 }
