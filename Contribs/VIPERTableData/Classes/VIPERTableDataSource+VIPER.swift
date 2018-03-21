@@ -9,10 +9,9 @@ import Foundation
 
 // MARK: Extension to access VIPER
 extension VIPERTable {
-    
+
     func install(router: VIPERRouter?, viewContext: VIPERViewContext?) {
         self.router = router
         self.viewContext = viewContext
     }
 }
-

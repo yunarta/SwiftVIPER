@@ -9,13 +9,13 @@ extension PlatformViewController {
 }
 
 public class Presenters {
- 
+
     var presenters = [String: VIPERPresenter]()
-    
+
     public func set(name: String, _ presenter: VIPERPresenter) {
         self.presenters[name] = presenter
     }
-    
+
     public func get(name: String) -> VIPERPresenter? {
         return self.presenters[name]
     }
@@ -30,11 +30,10 @@ extension PlatformViewController {
         if let map = object as? Presenters {
             return map
         }
-        
+
         let map = Presenters()
         objc_setAssociatedObject(self, &keyPlatformViewControllerPresenters, map, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-        
+
         return map
     }
 }
-

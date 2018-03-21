@@ -6,13 +6,13 @@ import UIKit
 
 //: Actual implementation of the view interface
 class MyView {
-    
+
     let observableState = VIPERField<(String, Int)>(("A", 0))
     var state: (String, Int) {
         get {
             return observableState.value
         }
-        
+
         set {
             observableState.value = newValue
         }
@@ -21,13 +21,13 @@ class MyView {
 
 //: View binding is the "V" in VIPER, where all the view related function are executed here
 class MyViewBinding: VIPERViewBinding, VIPERViewBindingInterface {
-    
+
     weak var button: UIButton? {
         didSet {
             button?.addTarget(self, action: #selector(MyViewBinding.update), for: UIControlEvents.touchUpInside)
         }
     }
-    
+
     weak var label: UILabel? {
         didSet {
             view.observableState.onChange { [weak self] (prefix, number) in
@@ -35,13 +35,13 @@ class MyViewBinding: VIPERViewBinding, VIPERViewBindingInterface {
             }
         }
     }
-    
+
     var view = MyView()
-    
+
     @objc required override init() {
         super.init()
     }
-    
+
     @objc func update() {
         let number = view.state.1 + 1
         view.state = (view.state.0, number)
@@ -50,35 +50,35 @@ class MyViewBinding: VIPERViewBinding, VIPERViewBindingInterface {
 
 //: Root view controller
 class MyController: UIViewController {
-    
+
     var binding = MyViewBinding()
-    
+
     override func loadView() {
         super.loadView()
-        
+
         let view = UIView()
         view.backgroundColor = .white
-        
+
         let button = UIButton()
         button.frame = CGRect(x: 16, y: 60, width: 200, height: 32)
         button.setTitle("Increment", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = UIColor.blue
-        
+
         view.addSubview(button)
-        
+
         let label = UILabel()
         label.frame = CGRect(x: 16, y: 108, width: 200, height: 32)
-        
+
         view.addSubview(label)
         self.view = view
-        
+
         binding.button = button
         binding.label = label
-        
+
         self.bindings = [binding]
     }
-    
+
     override func viewDidLoad() {
         navigationItem.title = "Root"
         dispatchViewDidLoad()
@@ -95,4 +95,3 @@ PlaygroundPage.current.liveView = UINavigationController(rootViewController: con
  You can test by uncommenting the line below
  */
 // controller.binding.view.state = ("B", 20)
-

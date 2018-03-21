@@ -119,6 +119,7 @@ public class GenericURLMatcher<MatchResult> {
      - Parameter url: URL to be executed against the matcher.
      - Returns: MatchResult when a match is found, or default MatchResult otherwise.
      */
+    //swiftlint:disable:next cyclomatic_complexity
     public func match(_ url: URL) -> MatchResult {
         let pathSegments = url.pathComponents
         let li = pathSegments.count - 1
@@ -195,7 +196,7 @@ public class IntentRouter {
     }
 
     private convenience init() {
-        self.init { (intent) -> Bool in
+        self.init { (_) -> Bool in
             return false
         }
     }
@@ -224,7 +225,7 @@ public class IntentRouter {
         _ = matcher.addRoute(authority: authority, path: path, result: action)
         return self
     }
-    
+
     /**
      Execute specified Intent agains registered matcher.
      
@@ -235,7 +236,7 @@ public class IntentRouter {
         guard let url = intent.data else {
             return false
         }
-        
+
         let result = matcher.match(url)
         return result(intent)
     }
@@ -243,7 +244,7 @@ public class IntentRouter {
 
 extension String {
 
-    subscript(i: Int) -> Character {
-        return self[index(startIndex, offsetBy: i)]
+    subscript(offset: Int) -> Character {
+        return self[index(startIndex, offsetBy: offset)]
     }
 }

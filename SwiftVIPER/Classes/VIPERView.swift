@@ -4,18 +4,20 @@
 //
 
 public protocol VIPERView {
-    
+
     var controller: PlatformViewController? { get }
-    
-    func assemble<Presenter>(_ presenter: Presenter.Type, assembler: (Presenter.Type) -> Presenter?) -> Presenter? where Presenter: VIPERPresenter
+
+    func assemble<Presenter>(_ presenter: Presenter.Type,
+                             assembler: (Presenter.Type) -> Presenter?) -> Presenter? where Presenter: VIPERPresenter
 }
 
 extension VIPERView {
-    
-    public func assemble<Presenter>(_ presenter: Presenter.Type, assembler: (Presenter.Type) -> Presenter?) -> Presenter? where Presenter: VIPERPresenter {
+
+    public func assemble<Presenter: VIPERPresenter>(_ presenter: Presenter.Type,
+                                                    assembler: (Presenter.Type) -> Presenter?) -> Presenter? {
         let p = assembler(presenter)
         p?.`internal`.router.root = controller
-        
+
         return p
     }
 }
@@ -28,6 +30,7 @@ public class VIPERViewContext {
         self.controller = controller
     }
 }
+
 public typealias VIPERViewBindingOutlet = VIPERViewBinding
 
 @objc public protocol VIPERViewBindingInterface: class {
@@ -57,7 +60,7 @@ open class VIPERViewBinding: NSObject, VIPERView {
     public internal (set) var viewContext: VIPERViewContext?
 
     var state: VIPERViewBindingState = .none
-    
+
     public override init() {
     }
 

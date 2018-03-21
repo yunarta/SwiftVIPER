@@ -7,7 +7,7 @@ import UIKit
 public typealias VIPERTableViewBindingOutlet = VIPERTableViewBinding & VIPERViewBindingInterface
 
 open class VIPERTableViewBinding: VIPERViewBinding {
-    
+
     weak var internalTableData: VIPERTable?
 
     public init(tableData: VIPERTable) {
@@ -18,7 +18,7 @@ open class VIPERTableViewBinding: VIPERViewBinding {
     open override func viewDidLoad() {
         super.viewDidLoad()
         assert(internalTableData != nil)
-        
+
         internalTableData?.install(router: controller?.router, viewContext: viewContext)
     }
 }

@@ -24,31 +24,30 @@ class StringData: VIPERTableDataSource, SingleType {
     }
 }
 
-
 class TextTableViewBinding: VIPERTableViewBinding, VIPERViewBindingInterface {
-    
+
     let tableData = VIPERTableData<StringData>(dataSource: StringData())
-    
+
     @IBOutlet weak var tableView: UITableView?
-    
+
     required init() {
         super.init(tableData: tableData)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         guard let tableView = tableView else {
             return
         }
-        
+
         tableView.register(UINib(nibName: "SingleLineTextCell", bundle: Bundle.main), forCellReuseIdentifier: "Text")
         tableData.install(to: tableView)
     }
 }
 
 class SingleTypeTableViewController: UIViewController {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         dispatchViewDidLoad()
@@ -59,4 +58,3 @@ class SingleTypeTableViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 }
-

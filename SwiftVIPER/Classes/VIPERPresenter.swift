@@ -48,7 +48,7 @@ class VIPERPresenterRouterImpl: VIPERPresenterRouter {
     weak var root: VIPERRouter?
 
     weak var presenter: VIPERPresenter?
-    
+
     public func performRouting(_ intent: Intent, withCode requestCode: Int) {
         assert(root != nil, "In order for presenter to perform routing, you need to use assemble() in VIPERView to hook the root router")
         intent.presentingIntent = presenter

@@ -29,4 +29,3 @@ assert(matcher.match(Intent(data: URL(string: "content://application/item/any/un
 
 assert(matcher.match(Intent(data: URL(string: "content://application/unknown"))) == false)
 assert(matcher.match(Intent(data: URL(string: "content://application/unknown/1"))) == false)
-

@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-               BuildableName = "SwiftVIPER_Example.app"
-               BlueprintName = "SwiftVIPER_Example"
+               BlueprintIdentifier = "99F227D72046960000CDAE63"
+               BuildableName = "SwiftVIPERDemo.app"
+               BlueprintName = "SwiftVIPERDemo"
                ReferencedContainer = "container:SwiftVIPER.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -81,14 +81,18 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "SwiftVIPER_Example.app"
-            BlueprintName = "SwiftVIPER_Example"
+            BlueprintIdentifier = "99F227D72046960000CDAE63"
+            BuildableName = "SwiftVIPERDemo.app"
+            BlueprintName = "SwiftVIPERDemo"
             ReferencedContainer = "container:SwiftVIPER.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
+      <LocationScenarioReference
+         identifier = "com.apple.dt.IDEFoundation.CurrentLocationScenarioIdentifier"
+         referenceType = "1">
+      </LocationScenarioReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
