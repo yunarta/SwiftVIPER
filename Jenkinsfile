@@ -9,16 +9,15 @@ node("cocoa") {
         }
 
         stage("Quality Check") {
-            sh """printenv
-            swiftlint autocorrect --config swiftlint.yml
-            if [[ \$(git diff --stat) != '' ]]; then
-                git branch ${branch} -t origin/${branch}
-                git checkout ${branch}
-                git add -u
-                git commit -m "CI: Auto correction"
-                git push origin
-            fi
-            """
+            // sh """swiftlint autocorrect --config swiftlint.yml
+            // if [[ \$(git diff --stat) != '' ]]; then
+            //     git branch ${branch} -t origin/${branch}
+            //     git checkout ${branch}
+            //     git add -u
+            //     git commit -m "CI: Auto correction"
+            //     git push origin
+            // fi
+            // """
 
             try {
                 sh """sed -ie 's/xcode/checkstyle/' swiftlint.yml
