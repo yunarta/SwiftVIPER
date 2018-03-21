@@ -45,19 +45,21 @@ public protocol VIPERPresenterRouter: VIPERRouter {
 
 class VIPERPresenterRouterImpl: VIPERPresenterRouter {
 
-    weak var router: VIPERRouter?
+    weak var root: VIPERRouter?
 
     weak var presenter: VIPERPresenter?
-
+    
     public func performRouting(_ intent: Intent, withCode requestCode: Int) {
+        assert(root != nil, "In order for presenter to perform routing, you need to use assemble() in VIPERView to hook the root router")
         intent.presentingIntent = presenter
         intent.requestCode = requestCode
 
-        router?.performRouting(intent)
+        root?.performRouting(intent)
     }
 
     func performRouting(_ intent: Intent) {
-        router?.performRouting(intent)
+        assert(root != nil, "In order for presenter to perform routing, you need to use assemble() in VIPERView to hook the root router")
+        root?.performRouting(intent)
     }
 }
 
@@ -118,15 +120,15 @@ extension VIPERPresenter {
  */
 extension VIPERPresenter {
 
-    var presentingIntent: VIPERPresenter? {
+    public var presentingIntent: VIPERPresenter? {
         return `internal`.presentingIntent
     }
 
-    var requestCode: Int {
+    public var requestCode: Int {
         return `internal`.requestCode
     }
 
-    var router: VIPERPresenterRouter {
+    public var router: VIPERPresenterRouter {
         return `internal`.router
     }
 }

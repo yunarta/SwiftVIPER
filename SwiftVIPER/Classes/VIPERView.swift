@@ -3,6 +3,23 @@
 // Copyright (c) 2017 Yunarta Kartawahyudi. All rights reserved.
 //
 
+public protocol VIPERView {
+    
+    var controller: PlatformViewController? { get }
+    
+    func assemble<Presenter>(_ presenter: Presenter.Type, assembler: (Presenter.Type) -> Presenter?) -> Presenter? where Presenter: VIPERPresenter
+}
+
+extension VIPERView {
+    
+    public func assemble<Presenter>(_ presenter: Presenter.Type, assembler: (Presenter.Type) -> Presenter?) -> Presenter? where Presenter: VIPERPresenter {
+        let p = assembler(presenter)
+        p?.`internal`.router.root = controller
+        
+        return p
+    }
+}
+
 public class VIPERViewContext {
 
     public internal (set) weak var controller: PlatformViewController?
@@ -29,7 +46,7 @@ enum VIPERViewBindingState {
     case viewDidDisappear
 }
 
-open class VIPERViewBinding: NSObject {
+open class VIPERViewBinding: NSObject, VIPERView {
 
     public internal (set) weak var controller: PlatformViewController? {
         didSet {
@@ -38,7 +55,6 @@ open class VIPERViewBinding: NSObject {
     }
 
     public internal (set) var viewContext: VIPERViewContext?
-
 
     var state: VIPERViewBindingState = .none
     

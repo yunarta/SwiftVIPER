@@ -21,7 +21,7 @@ private var keyPlatformViewControllerBindings = "keyPlatformViewControllerBindin
 extension PlatformViewController {
     
     func setupBindings(_ bindings: [VIPERViewBindingOutlet]?) {
-        assert(validateBindings(bindings) == nil, "All binding must conform to VIPERViewBindingInterface, \(type(of: validateBindings(bindings))) is not")
+        // assert(validateBindings(bindings) == nil, "All binding must conform to VIPERViewBindingInterface, \(type(of: validateBindings(bindings))) is not")
         bindings?.forEach { binding in
             binding.controller = self
         }
