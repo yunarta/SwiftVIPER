@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../Docs.playground">
+   </FileRef>
+   <FileRef
+      location = "group:Playground/../Playground.playground">
+   </FileRef>
+   <FileRef
       location = "group:SwiftVIPER.xcodeproj">
    </FileRef>
    <FileRef

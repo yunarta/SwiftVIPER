@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' display-mode='raw'>
+    <pages>
+        <page name='Routing Playground'/>
+        <page name='Routing in ViewController Demo'/>
+        <page name='Why VIPER View'/>
+        <page name='Using VIPER Presenter'/>
+        <page name='Testing VIPER Presenter'/>
+        <page name='Testing VIPER View'/>
+        <page name='Using VIPER Presenter Routing'/>
+    </pages>
+</playground>

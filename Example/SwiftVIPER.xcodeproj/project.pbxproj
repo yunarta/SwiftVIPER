@@ -25,6 +25,28 @@
 		EB7FFC1A83476573155C6E19 /* Pods_Playground.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57C7AB54DA68988FC0DA5291 /* Pods_Playground.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		9905CA00205944A6009C23AC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		994C25AD205FBCB40094341A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0335D459A6DBF2F928C2749A /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		32AD9B6B1F7E218A3B964FB0 /* Pods-SwiftVIPERDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVIPERDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVIPERDemo/Pods-SwiftVIPERDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -37,7 +59,6 @@
 		86CE492DFECA763F5F96B02F /* Pods_SwiftVIPERDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftVIPERDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87214B1015A536219986AFD6 /* Pods-SwiftVIPER_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVIPER_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVIPER_Tests/Pods-SwiftVIPER_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8C6CD6CE07A1A2231C91F338 /* Pods-SwiftVIPER_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVIPER_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVIPER_Tests/Pods-SwiftVIPER_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		991D9988203EC6930050A804 /* Routing in ViewController Demo.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Routing in ViewController Demo.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		992C7D7F204E8B7100C70CBB /* TextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
 		992C7D81204E8D8E00C70CBB /* MultiTypeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiTypeTableViewController.swift; sourceTree = "<group>"; };
 		992C7D83204E8F5600C70CBB /* MultiTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiTextCell.swift; sourceTree = "<group>"; };
@@ -47,11 +68,6 @@
 		99696D69203E9E070035A8F7 /* Playground.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Playground.h; sourceTree = "<group>"; };
 		99696D6A203E9E070035A8F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99696D6F203E9E230035A8F7 /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
-		99696D71203E9E7A0035A8F7 /* Routing Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Routing Playground.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		997B5DE72040072700A7684A /* Why VIPER View.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Why VIPER View.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		997B5DE820400D3900A7684A /* Using VIPER Presenter.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Using VIPER Presenter.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		9997B41A20569A4100306CF9 /* Testing VIPER View.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Testing VIPER View.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		99F0CA8F20401455009E9534 /* Testing VIPER Presenter.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Testing VIPER Presenter.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		99F227D82046960000CDAE63 /* SwiftVIPERDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftVIPERDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99F227DA2046960000CDAE63 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99F227DC2046960000CDAE63 /* SingleTypeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTypeTableViewController.swift; sourceTree = "<group>"; };
@@ -169,12 +185,6 @@
 		99696D68203E9E070035A8F7 /* Playground */ = {
 			isa = PBXGroup;
 			children = (
-				99696D71203E9E7A0035A8F7 /* Routing Playground.playground */,
-				991D9988203EC6930050A804 /* Routing in ViewController Demo.playground */,
-				997B5DE72040072700A7684A /* Why VIPER View.playground */,
-				997B5DE820400D3900A7684A /* Using VIPER Presenter.playground */,
-				99F0CA8F20401455009E9534 /* Testing VIPER Presenter.playground */,
-				9997B41A20569A4100306CF9 /* Testing VIPER View.playground */,
 				99696D69203E9E070035A8F7 /* Playground.h */,
 				99696D6A203E9E070035A8F7 /* Info.plist */,
 				99696D6F203E9E230035A8F7 /* Playground.swift */,
@@ -242,6 +252,7 @@
 				99696D62203E9E070035A8F7 /* Sources */,
 				99696D63203E9E070035A8F7 /* Frameworks */,
 				99696D64203E9E070035A8F7 /* Headers */,
+				994C25AD205FBCB40094341A /* CopyFiles */,
 				99696D65203E9E070035A8F7 /* Resources */,
 				304907DFE16BE71AC21F1D25 /* [CP] Copy Pods Resources */,
 			);
@@ -264,6 +275,7 @@
 				99F227D62046960000CDAE63 /* Resources */,
 				153457179E93A03960BEDB7E /* [CP] Embed Pods Frameworks */,
 				49F6DBC139A7A28BC22C3F32 /* [CP] Copy Pods Resources */,
+				9905CA00205944A6009C23AC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -699,6 +711,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Playground/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -735,6 +748,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Playground/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -764,6 +778,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 3985B8MF23;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = SwiftVIPERDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
@@ -789,6 +804,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3985B8MF23;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = SwiftVIPERDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
