@@ -1,0 +1,19 @@
+included:
+- Contribs
+- SwiftVIPER
+- Example
+
+excluded:
+- Example/Pods
+- Example/Carthage
+
+line_length: 150
+identifier_name:
+  excluded: # excluded via string array
+    - id
+    - at
+    - to
+    - in
+    - op
+
+reporter: 'xcode'
