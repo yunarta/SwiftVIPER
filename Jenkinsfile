@@ -1,4 +1,5 @@
 properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '5'))])
+
 node("cocoa") {
     try {
         stage("Checkout") {
