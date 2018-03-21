@@ -31,7 +31,7 @@ class TextCellViewBinding: UIView, VIPERCellView, AutoLayoutCellView {
     
     let view = TextCellView()
     
-    var presenter: TextCellPresenter? {
+    weak var presenter: TextCellPresenter? {
         didSet {
             guard let presenter = presenter else {
                 return
@@ -50,19 +50,15 @@ class TextCellViewBinding: UIView, VIPERCellView, AutoLayoutCellView {
 
 class TextCell: UITableViewCell, VIPERTableCellView {
     
-    var presenter: TextCellPresenter? = TextCellPresenter()
-        
-    var layoutView: UIView?
-    
-    var delegate: TextCellPresenter?
-    
-    var cellView: TextCellViewBinding {
+    var layoutView: UIView? {
         return binding
     }
     
-    @IBOutlet weak var binding: TextCellViewBinding! {
+    var presenter: TextCellPresenter? = TextCellPresenter()
+    
+    @IBOutlet weak var binding: TextCellViewBinding? {
         didSet {
-            cellView.presenter = presenter
+            binding?.presenter = presenter
         }
     }
 }

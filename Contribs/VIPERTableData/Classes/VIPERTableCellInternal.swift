@@ -23,7 +23,7 @@ class VIPERCellViewContext {
     var indexPath: IndexPath?
 }
 
-extension VIPERCellViewBase {
+extension VIPERCellView {
     
     var context: VIPERCellViewContext {
         if let context = objc_getAssociatedObject(self, &keyVIPERCellViewContext) as? VIPERCellViewContext {

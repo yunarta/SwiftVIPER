@@ -270,26 +270,21 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
             dataSource.present(table: self, cell: inUse, at: indexPath)
             
             let calculatedHeight: CGFloat
+            let layoutSize: CGSize = inUse.computeLayoutSize(fit: tableView.frame.size)
+            inUse.context.isContentChanged = false
+            
+            calculatedHeight = layoutSize.height + separatorHeight
+            
+            #if DEBUG
             switch inUse.layoutMode {
             case .autoLayout:
-                let layoutView = inUse.layoutView ?? inUse.contentView
-                let layoutSize: CGSize = VIPERTableData.systemLayoutFitting(layoutView, width: tableView.frame.width)
-                
-                calculatedHeight = layoutSize.height + separatorHeight
-                #if DEBUG
                 debug?.log(.height, cache: .miss, "\(indexPath) calculate cache miss for 🅰️ layout, height = \(calculatedHeight)")
-                #endif
                 
             case .manualLayout:
                 // for manual cell, we will recalculate the height if the content has changed
-                let layoutSize: CGSize = inUse.computeLayoutSize(fit: tableView.frame.size)
-                inUse.context.isContentChanged = false
-                
-                calculatedHeight = layoutSize.height + separatorHeight
-                #if DEBUG
                 debug?.log(.height, cache: .miss, "\(indexPath) calculate cache miss for Ⓜ️ layout, height = \(calculatedHeight)")
-                #endif
             }
+            #endif
             
             caches.cachedHeights[indexKey] = calculatedHeight
             return calculatedHeight
@@ -303,26 +298,21 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
                 dataSource.present(table: self, cell: cell, at: indexPath)
                 
                 let calculatedHeight: CGFloat
+                // for manual cell, we will recalculate the height if the content has changed
+                let layoutSize: CGSize = cell.computeLayoutSize(fit: tableView.frame.size)
+                cell.context.isContentChanged = false
+                
+                calculatedHeight = layoutSize.height + separatorHeight
+                
+                #if DEBUG
                 switch cell.layoutMode {
                 case .autoLayout:
-                    let layoutView = cell.layoutView ?? cell.contentView
-                    let layoutSize: CGSize = VIPERTableData.systemLayoutFitting(layoutView, width: tableView.frame.width)
-                    
-                    calculatedHeight = layoutSize.height + separatorHeight
-                    #if DEBUG
                     debug?.log(.height, cache: .miss, "\(indexPath) post-estimate cache miss for 🅰️ layout, height = \(calculatedHeight)")
-                    #endif
                     
                 case .manualLayout:
-                    // for manual cell, we will recalculate the height if the content has changed
-                    let layoutSize: CGSize = cell.estimateLayoutSize(fit: tableView.frame.size) 
-                    cell.context.isContentChanged = false
-                    
-                    calculatedHeight = layoutSize.height + separatorHeight
-                    #if DEBUG
                     debug?.log(.height, cache: .miss, "\(indexPath) post-estimate cache miss for Ⓜ️ layout, height = \(calculatedHeight)")
-                    #endif
                 }
+                #endif
                 
                 caches.cachedHeights[indexKey] = calculatedHeight
                 return calculatedHeight
@@ -356,26 +346,21 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
             let cell: VIPERTableCellViewBase = cached.cell
             
             let calculatedHeight: CGFloat
+            let layoutSize: CGSize = cell.estimateLayoutSize(fit: tableView.frame.size)
+            cell.context.isContentChanged = false
+            
+            calculatedHeight = layoutSize.height + separatorHeight
+            
+            #if DEBUG
             switch cell.layoutMode {
             case .autoLayout:
-                let layoutView = cell.layoutView ?? cell.contentView
-                let layoutSize: CGSize = VIPERTableData.systemLayoutFitting(layoutView, width: tableView.frame.width)
-                
-                calculatedHeight = layoutSize.height + separatorHeight
-                #if DEBUG
                 debug?.log(.estimate, cache: .miss, "\(indexPath) estimate cache miss for 🅰️ layout, height = \(calculatedHeight)")
-                #endif
                 
             case .manualLayout:
                 // for manual cell, we will recalculate the height if the content has changed
-                let layoutSize: CGSize = cell.estimateLayoutSize(fit: tableView.frame.size)
-                cell.context.isContentChanged = false
-                
-                calculatedHeight = layoutSize.height + separatorHeight
-                #if DEBUG
                 debug?.log(.estimate, cache: .miss, "\(indexPath) estimate cache miss for Ⓜ️ layout, height = \(calculatedHeight)")
-                #endif
             }
+            #endif
             
             caches.estimatedHeights[id] = calculatedHeight
             return calculatedHeight
@@ -400,12 +385,6 @@ open class VIPERTableData<DataSource>: NSObject, VIPERTable, UITableViewDataSour
         }
         
         return cache
-    }
-    
-    class func systemLayoutFitting(_ view: UIView, width: CGFloat) -> CGSize {
-        return view.systemLayoutSizeFitting(CGSize(width: width, height: 0),
-                                            withHorizontalFittingPriority: UILayoutPriority.required,
-                                            verticalFittingPriority: UILayoutPriority.fittingSizeLevel)
     }
 }
 

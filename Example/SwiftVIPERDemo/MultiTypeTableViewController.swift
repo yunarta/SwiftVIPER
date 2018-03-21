@@ -45,7 +45,6 @@ class MultiTypeTableViewBinding: VIPERTableViewBinding, VIPERViewBindingInterfac
     
     let tableData = VIPERTableData<MultiTypeData>(dataSource: MultiTypeData())
     
-    
     @IBOutlet weak var tableView: UITableView?
     
     required init() {

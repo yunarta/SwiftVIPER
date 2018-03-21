@@ -6,6 +6,7 @@
 //  Copyright © 2018 CocoaPods. All rights reserved.
 //
 
+import Cleanse
 import Foundation
 import RxSwift
 import SwiftVIPER
@@ -56,21 +57,13 @@ class MultilineTextCellViewBinding: UIView, VIPERCellView, ManualLayoutCellView 
     }
 }
 
-class MultilineTextCell: UITableViewCell, VIPERTableCellView {
+class MultilineTextCell: UITableViewCell, VIPERTableCellView, ManualLayoutCellView {
     
     var presenter: MultilineTextCellPresenter? = MultilineTextCellPresenter()
     
-    var layoutView: UIView?
-    
-    var delegate: MultilineTextCellPresenter?
-    
-    var cellView: MultilineTextCellViewBinding {
-        return binding
-    }
-    
-    @IBOutlet weak var binding: MultilineTextCellViewBinding! {
+    @IBOutlet weak var binding: MultilineTextCellViewBinding? {
         didSet {
-            binding.presenter = presenter
+            binding?.presenter = presenter
         }
     }
 }
